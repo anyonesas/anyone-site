@@ -743,7 +743,12 @@
             border-radius: 20px; margin-top: 24px; overflow: hidden;
         }
         .mentor-photos { width: 100%; height: auto; display: block; }
-        .mentor-card-img { width: 100%; height: auto; display: block; border-radius: 20px; margin-bottom: 16px; }
+        .mentor-card-wrap {
+            overflow: hidden;
+            border-radius: 16px;
+            margin-bottom: 16px;
+        }
+        .mentor-card-img { width: calc(100% + 10px); margin: -5px; height: auto; display: block; }
         .mentor-body { padding: 20px 16px 24px; }
         .mentor-name {
             font-family: 'Figtree', sans-serif; font-weight: 300; font-size: 30px;
@@ -2013,20 +2018,13 @@
         <p class="mentors-intro-text">Tu vas apprendre <strong>depuis chez toi</strong> et le rencontrer dans nos studios.</p>
         <p class="mentors-intro-text">Vous allez travailler jusqu'au tournage de ta <strong>bande démo.</strong></p>
 
-        <!-- Kait Tenison -->
-        <img class="mentor-card-img" src="assets/kait_card.png" alt="Kait Tenison">
-        <!-- Lauréna Thellier -->
-        <img class="mentor-card-img" src="assets/laurena_card.png" alt="Lauréna Thellier">
-        <!-- Philippe du Janerand -->
-        <img class="mentor-card-img" src="assets/philippe_card.png" alt="Philippe du Janerand">
-        <!-- Aurore Broutin -->
-        <img class="mentor-card-img" src="assets/aurore_card.png" alt="Aurore Broutin">
-        <!-- Théo Augier -->
-        <img class="mentor-card-img" src="assets/theo_card.png" alt="Théo Augier">
-        <!-- Fouad Benhammou -->
-        <img class="mentor-card-img" src="assets/fouad_card.png" alt="Fouad Benhammou">
-        <!-- Charlotte Durand-Raucher -->
-        <img class="mentor-card-img" src="assets/charlotte_card.png" alt="Charlotte Durand-Raucher">
+        <div class="mentor-card-wrap"><img class="mentor-card-img" src="assets/kait_card.png" alt="Kait Tenison"></div>
+        <div class="mentor-card-wrap"><img class="mentor-card-img" src="assets/laurena_card.png" alt="Lauréna Thellier"></div>
+        <div class="mentor-card-wrap"><img class="mentor-card-img" src="assets/philippe_card.png" alt="Philippe du Janerand"></div>
+        <div class="mentor-card-wrap"><img class="mentor-card-img" src="assets/aurore_card.png" alt="Aurore Broutin"></div>
+        <div class="mentor-card-wrap"><img class="mentor-card-img" src="assets/theo_card.png" alt="Théo Augier"></div>
+        <div class="mentor-card-wrap"><img class="mentor-card-img" src="assets/fouad_card.png" alt="Fouad Benhammou"></div>
+        <div class="mentor-card-wrap"><img class="mentor-card-img" src="assets/charlotte_card.png" alt="Charlotte Durand-Raucher"></div>
     </div>
 </div>
 
@@ -2421,29 +2419,25 @@
 </div>
 
 <!-- NEXT STEPS -->
-<div class="main-card">
-    <div style="padding: 16px;">
-        <div class="nextsteps-section">
-            <p class="nextsteps-label">ÉTAPES SUIVANTES</p>
-            <p class="nextsteps-title">C'est quoi la suite ? 🚀</p>
-            <div class="nextsteps-steps">
-                <p><strong>1</strong>. Fais ton appel de candidature.</p>
-                <p><strong>2.</strong> Détermine les actions possibles.<br><strong>3. Commence à travailler.</strong></p>
-            </div>
+<div style="margin: 0 12px 12px;">
+    <div class="nextsteps-section">
+        <p class="nextsteps-label">ÉTAPES SUIVANTES</p>
+        <p class="nextsteps-title">C'est quoi la suite ? 🚀</p>
+        <div class="nextsteps-steps">
+            <p><strong>1</strong>. Fais ton appel de candidature.</p>
+            <p><strong>2.</strong> Détermine les actions possibles.<br><strong>3. Commence à travailler.</strong></p>
         </div>
     </div>
 </div>
 
 <!-- ASSISTANCE -->
-<div class="main-card">
-    <div style="padding: 16px;">
-        <div class="assistance-section">
-            <img class="assistance-headset" src="assets/assistance_headset.svg" alt="">
-            <p class="assistance-title">Assistance 24/7</p>
-            <div class="assistance-text">
-                <p>Tu profites d'une assistance pour toutes tes questions concernant ton parcours, les castings ou l'acting en général.</p>
-                <p><strong>📞 01 89 70 70 13  ou support@anyone.fr</strong></p>
-            </div>
+<div style="margin: 0 12px 12px;">
+    <div class="assistance-section">
+        <img class="assistance-headset" src="assets/assistance_headset.svg" alt="">
+        <p class="assistance-title">Assistance 24/7</p>
+        <div class="assistance-text">
+            <p>Tu profites d'une assistance pour toutes tes questions concernant ton parcours, les castings ou l'acting en général.</p>
+            <p><strong>📞 01 89 70 70 13  ou support@anyone.fr</strong></p>
         </div>
     </div>
 </div>
