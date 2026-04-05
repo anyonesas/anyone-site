@@ -1,0 +1,2538 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anyone - Fiche Candidature</title>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f0f0f0;
+            color: #1a1a1a;
+            max-width: 560px;
+            margin: 0 auto;
+            -webkit-font-smoothing: antialiased;
+        }
+        img { width: 100%; height: auto; display: block; }
+
+        /* Page title */
+        .page-title {
+            text-align: center;
+            padding: 24px 20px 16px;
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #bbb;
+            background: #f0f0f0;
+        }
+
+        /* Main card container */
+        .main-card {
+            background: #fff;
+            border-radius: 20px;
+            margin: 0 12px 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        /* Section inside card with padding */
+        .card-section {
+            padding: 20px;
+        }
+        .card-section img {
+            border-radius: 12px;
+        }
+
+        /* Flush image (no padding, no radius) */
+        .flush img {
+            border-radius: 0;
+        }
+
+        /* Padded image section */
+        .img-pad {
+            padding: 16px;
+        }
+        .img-pad img {
+            border-radius: 16px;
+        }
+
+        /* Dark background sections */
+        .dark-bg {
+            background: #000;
+        }
+        .dark-card {
+            background: #000;
+            border-radius: 20px;
+            margin: 0 12px 12px;
+            overflow: hidden;
+            padding: 16px;
+        }
+        .dark-card img {
+            border-radius: 16px;
+        }
+
+        /* Full-bleed dark section */
+        .dark-full {
+            background: #000;
+            margin: 0 12px 12px;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .dark-full img {
+            border-radius: 0;
+        }
+        .dark-full .inner-pad {
+            padding: 16px;
+        }
+        .dark-full .inner-pad img {
+            border-radius: 16px;
+            margin-bottom: 12px;
+        }
+        .dark-full .inner-pad img:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Spacing */
+        .gap-8 { height: 8px; }
+        .gap-12 { height: 12px; }
+        .gap-16 { height: 16px; }
+
+        /* White card with image */
+        .white-card {
+            background: #fff;
+            border-radius: 20px;
+            margin: 0 12px 12px;
+            overflow: hidden;
+        }
+        .white-card img {
+            border-radius: 0;
+        }
+        .white-card .pad {
+            padding: 16px;
+        }
+        .white-card .pad img {
+            border-radius: 16px;
+        }
+
+        /* Top card header */
+        .top-header {
+            display: flex; align-items: flex-end; justify-content: space-between;
+            padding: 24px 24px 0;
+        }
+        .top-header .logo { height: 26px; width: auto; }
+        .top-header .programme {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 700; font-size: 20px; color: #06f;
+            text-transform: uppercase; letter-spacing: 0.4px;
+            line-height: 1.3; padding-bottom: 2px;
+        }
+        .top-divider {
+            height: 1px; background: #e2e1e7;
+            margin: 14px 24px 0;
+        }
+        .top-section {
+            position: relative;
+            padding: 24px 24px 56px;
+        }
+        .top-label {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 600; font-size: 16px; color: #0b1012;
+            text-transform: uppercase; letter-spacing: 0.32px;
+            opacity: 0.65; mix-blend-mode: multiply;
+            margin-bottom: 16px;
+        }
+        .top-stamp {
+            position: absolute; top: 6px; right: 24px;
+            width: 118px; height: 121px;
+        }
+        .top-stamp img { width: 100%; height: 100%; }
+        .tag-bar {
+            display: flex; align-items: center;
+            background: #f0f0f5; border-radius: 100px;
+            overflow: hidden; margin-bottom: 32px;
+        }
+        .tag-encours {
+            display: flex; align-items: center; gap: 9px;
+            background: rgba(15,170,39,0.79);
+            border-radius: 100px 0 0 100px;
+            padding: 8px 12px; height: 40px;
+            color: #fff; font-family: 'Figtree', -apple-system, sans-serif;
+            font-size: 12px; font-weight: 400;
+            text-transform: uppercase; letter-spacing: 0.24px;
+            white-space: nowrap;
+        }
+        .tag-encours svg { width: 24px; height: 24px; flex-shrink: 0; }
+        .welcome {
+            display: flex; gap: 12px; align-items: flex-start;
+        }
+        .welcome-pic {
+            width: 104px; height: 104px; flex-shrink: 0;
+            position: relative;
+        }
+        .welcome-pic img.photo {
+            width: 96px; height: 96px; border-radius: 50%;
+            object-fit: cover; position: absolute;
+            top: 4px; left: 4px;
+        }
+        .welcome-pic .ring {
+            width: 104px; height: 104px; border-radius: 50%;
+            border: 2.5px solid #4A90D9;
+            position: absolute; top: 0; left: 0;
+        }
+        .welcome-msg { flex: 1; }
+        .bubble {
+            background: #f8f8fa; border-radius: 0 20px 20px 20px;
+            padding: 12px 16px 16px;
+            margin-bottom: 8px;
+        }
+        .bubble p {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-size: 22px; font-weight: 400; color: #0b1012;
+            line-height: 1.2;
+        }
+        .welcome-author {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-size: 20px; font-weight: 400; color: #6f6d76;
+            line-height: 1.2;
+        }
+
+        /* Chiffres */
+        .chiffres { padding: 60px 24px; }
+        .chiffres-title {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 600; font-size: 36px; color: #191919;
+            line-height: 1.1; text-align: center; margin-bottom: 36px;
+        }
+        .chiffres-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 32px 22px;
+        }
+        .chiffre-cell {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 12px; text-align: center;
+        }
+        .chiffre-emoji { font-size: 48px; line-height: 1; }
+        .chiffre-stat { display: flex; flex-direction: column; align-items: center; }
+        .chiffre-num {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 700; font-size: 26px; color: #242424;
+            line-height: 1.2;
+        }
+        .chiffre-line {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 400; font-size: 20px; color: #242424;
+            line-height: 1.2;
+        }
+        .chiffre-line mark, .chiffre-num mark {
+            background: #0360fa; color: #fff;
+            padding: 2px 8px; border-radius: 6px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .chiffre-sub {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 400; font-size: 14px; color: #0b1012;
+            line-height: 1.15;
+        }
+        .freecasting-card {
+            margin-top: 36px;
+            background: linear-gradient(90deg, #efefff, #efefff);
+            background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 492 172' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><rect x='0' y='0' height='100%25' width='100%25' fill='url(%23grad)' opacity='1'/><defs><radialGradient id='grad' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(-17.434 -6.2834 22.137 -7.7427 378.39 116.78)'><stop stop-color='rgba(255,183,106,0.8)' offset='0'/><stop stop-color='rgba(255,183,106,0)' offset='1'/></radialGradient></defs></svg>"), linear-gradient(90deg, #efefff, #efefff);
+            border-radius: 20px; padding: 24px 16px 32px;
+            display: flex; gap: 32px; align-items: flex-start;
+            position: relative; overflow: hidden;
+        }
+        .freecasting-logo {
+            width: 140px; min-width: 140px;
+        }
+        .freecasting-logo img {
+            width: 140px; height: auto; display: block;
+        }
+        .freecasting-desc {
+            flex: 1;
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 500; font-size: 20px; color: rgba(11,16,18,0.88);
+            line-height: 1.2;
+        }
+        .freecasting-desc strong { font-weight: 700; }
+
+        /* Parcours */
+        .parcours-card { padding: 56px 8px 40px; text-align: center; }
+        .parcours-divider {
+            display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+        }
+        .parcours-divider-line { flex: 1; height: 1px; background: #e2e1e7; }
+        .parcours-divider-text {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 600; font-size: 14px; color: #0b1012;
+            text-transform: uppercase; letter-spacing: 0.32px;
+            opacity: 0.65; white-space: nowrap;
+        }
+        .parcours-title {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 600; font-size: 36px; color: #191919;
+            line-height: 1.1; margin-bottom: 32px;
+        }
+        .parcours-blocks { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+        .parcours-intro {
+            background: linear-gradient(121deg, #06f 7%, #1916bd 75%);
+            border-radius: 20px; padding: 33px 16px 24px; text-align: left; width: 100%;
+        }
+        .parcours-intro p {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-size: 28px; font-weight: 400; color: #fff; line-height: 1.2;
+        }
+        .parcours-intro p + p { margin-top: 16px; }
+        .parcours-intro strong { font-weight: 700; }
+        .parcours-arrow {
+            font-size: 40px; color: #0b1012; line-height: 1;
+            padding: 8px 0; opacity: 0.3;
+        }
+        .parcours-bloc {
+            background: #f8f8fa; border-radius: 20px;
+            display: flex; gap: 16px; align-items: flex-start;
+            padding: 16px; width: 100%; text-align: left;
+        }
+        .parcours-bloc-text { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+        .parcours-bloc-num {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 700; font-size: 14px; color: #6f6d76;
+            text-transform: uppercase; letter-spacing: 0.32px;
+            margin-bottom: 4px;
+        }
+        .parcours-bloc-name {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 600; font-size: 28px; color: #191919;
+            line-height: 1.1;
+        }
+        .parcours-bloc-desc {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 400; font-size: 20px; color: #0b1012;
+            line-height: 1.2;
+        }
+        .parcours-bloc-icon {
+            width: 90px; height: 90px; min-width: 90px;
+            border-radius: 20px; display: flex;
+            align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .parcours-bloc-icon img { width: 55px; height: 55px; }
+        .parcours-tag {
+            background: linear-gradient(98deg, #0b1012 25%, #000 100%);
+            border-radius: 20px; padding: 8px 16px;
+            color: #fff; font-family: 'Figtree', -apple-system, sans-serif;
+            font-size: 16px; font-weight: 400; text-align: right;
+            align-self: flex-end;
+        }
+        .parcours-tag strong { font-weight: 700; }
+        .parcours-option { align-items: center; }
+        .parcours-option-btn {
+            width: 48px; height: 48px; min-width: 48px;
+            border-radius: 50%; border: 3px solid #06f;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; color: #06f; font-weight: 600;
+        }
+
+        /* Correspondre card */
+        .corresp-card {
+            padding: 32px 24px 40px;
+            background: linear-gradient(167deg, #e7e7e7 3%, rgba(255,255,255,0) 35%, #f5f5f5 65%);
+            border-radius: 20px;
+            margin: 16px;
+        }
+        .corresp-label {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 600; font-size: 16px; color: #0b1012;
+            text-transform: uppercase; letter-spacing: 0.32px;
+            opacity: 0.65; mix-blend-mode: multiply;
+            margin-bottom: 24px;
+        }
+        .corresp-title {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 600; font-size: 36px; color: #191919;
+            line-height: 1.1; margin-bottom: 16px;
+        }
+        .corresp-list { display: flex; flex-direction: column; gap: 8px; }
+        .corresp-item {
+            display: flex; gap: 8px; align-items: flex-start;
+        }
+        .corresp-emoji {
+            font-size: 24px; line-height: 1.2;
+            flex-shrink: 0; width: 40px;
+        }
+        .corresp-item p {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-size: 22px; font-weight: 400; color: #191919;
+            line-height: 1.2;
+        }
+        .corresp-item strong { font-weight: 700; }
+
+        /* Certification blocks */
+        .cert-blue {
+            background: linear-gradient(180deg, #4d8df7 0%, #2563eb 100%);
+            padding: 24px 32px;
+            text-align: left;
+        }
+        .cert-blue p {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-size: 17px; font-weight: 400; color: #fff;
+            line-height: 1.45;
+        }
+        .cert-blue strong { font-weight: 700; }
+        .cert-dark {
+            background: #2a2d35;
+            padding: 24px 32px;
+            text-align: left;
+        }
+        .cert-dark p {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-size: 17px; font-weight: 400; color: rgba(255,255,255,0.85);
+            line-height: 1.45;
+        }
+
+        /* Services plan */
+        .services-plan {
+            background: linear-gradient(102deg, rgb(255, 2, 47) 0%, rgb(55, 0, 210) 94%);
+            border-radius: 40px;
+            border: 1.65px solid rgba(255,255,255,0.2);
+            padding: 32px 24px 24px;
+            overflow: hidden;
+        }
+        .services-top { text-align: center; margin-bottom: 16px; }
+        .services-title {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 600; font-size: 32px; color: #fff;
+            line-height: 1.02; margin-bottom: 8px;
+        }
+        .services-subtitle {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 500; font-size: 18px; color: #fff;
+            line-height: 1.16;
+        }
+        .services-subtitle em {
+            font-style: italic; color: rgba(255,255,255,0.74);
+        }
+        .services-list { display: flex; flex-direction: column; gap: 8px; }
+        .service-row {
+            display: flex; align-items: center; gap: 14px;
+            background: linear-gradient(140deg, rgba(0,0,0,0.3) 17%, rgba(0,0,0,0.05) 72%);
+            backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 12px;
+            overflow: hidden;
+        }
+        .service-icon {
+            width: 52px; height: 52px; min-width: 52px;
+            border-radius: 12px; overflow: hidden;
+        }
+        .service-icon img {
+            width: 52px; height: 52px;
+            object-fit: cover; border-radius: 12px;
+        }
+        .service-icon-emoji {
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 12px;
+        }
+        .service-icon-emoji span { font-size: 30px; line-height: 1; }
+        .service-text {
+            display: flex; flex-direction: column; gap: 1px; color: #fff;
+            font-family: 'Figtree', -apple-system, sans-serif;
+        }
+        .service-name { font-weight: 500; font-size: 20px; line-height: 1.1; }
+        .service-desc { font-weight: 300; font-size: 15px; line-height: 1.35; }
+
+        /* UGC Section */
+        .ugc-section {
+            background: #000;
+            border-radius: 20px;
+            padding: 16px 20px 52px;
+            overflow: hidden;
+        }
+        .ugc-card {
+            background: linear-gradient(194deg, rgba(0,172,255,0.2) 14%, rgba(0,172,255,0.032) 79%);
+            border-radius: 32px;
+            padding: 20px 22px 22px;
+            display: flex; flex-direction: column; gap: 10px;
+        }
+        .ugc-logos {
+            display: flex; align-items: center; justify-content: center;
+            padding: 8px 0;
+        }
+        .ugc-logos img {
+            width: 100%; max-width: 380px; height: auto;
+        }
+        .ugc-text {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 300; font-size: 24px; color: #fff;
+            line-height: 1.25;
+        }
+        .ugc-text strong { font-weight: 700; }
+
+        /* Selftape / Comparison Section */
+        .selftape-section {
+            background: #000;
+            border-radius: 20px;
+            padding: 32px 24px;
+            display: flex; flex-direction: column; gap: 40px;
+        }
+        .selftape-header { padding: 0 16px; }
+        .selftape-label {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 500; font-size: 14px; color: #ff022f;
+            text-transform: uppercase; letter-spacing: 0.32px;
+            margin-bottom: 12px;
+        }
+        .selftape-title {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 300; font-size: 28px; color: #fff;
+            line-height: 1.1; margin-bottom: 16px;
+        }
+        .selftape-title strong { font-weight: 700; }
+        .selftape-title .highlight {
+            background: #ff022f; color: #fff;
+            padding: 2px 8px; border-radius: 6px;
+            font-weight: 700; display: inline-block;
+        }
+        .selftape-sub {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 300; font-size: 16px; color: #fff;
+            line-height: 1.25;
+        }
+        .selftape-sub strong { font-weight: 700; }
+        .compare-card {
+            border: 1.5px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            padding: 30px 18px 18px;
+            position: relative;
+            display: flex; flex-direction: column; gap: 24px;
+            align-items: center;
+        }
+        .compare-card.sans {
+            background: linear-gradient(168deg, rgb(116,0,21) 11%, rgb(37,0,6) 98%);
+            border-color: rgba(255,2,47,0.2);
+            margin-top: 16px;
+        }
+        .compare-card.avec {
+            background: linear-gradient(168deg, #8b6914 0%, #5a3d08 30%, #2d1e03 70%, #1a1000 100%);
+            position: relative;
+            margin-top: 16px;
+        }
+        .compare-tag {
+            position: absolute; top: -14px; left: 50%;
+            transform: translateX(-50%);
+            padding: 2px 8px; border-radius: 15px;
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-size: 18px; color: #fff;
+            text-transform: uppercase; letter-spacing: 0.42px;
+            white-space: nowrap; z-index: 2;
+        }
+        .compare-tag.sans-tag { background: #ff022f; }
+        .compare-tag.avec-tag { background: linear-gradient(163deg, #e5c207 14%, #c16b06 54%); }
+        .compare-tag strong { font-weight: 800; }
+        .compare-tag span { font-weight: 500; }
+        .compare-plan {
+            background: linear-gradient(107deg, rgba(255,255,255,0.2) 17%, rgba(255,255,255,0.032) 72%);
+            backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 32px;
+            padding: 20px 16px 24px;
+            width: 100%;
+            display: flex; flex-direction: column;
+            justify-content: space-between;
+        }
+        .compare-list {
+            display: flex; flex-direction: column; gap: 8px;
+            padding: 0 8px; margin-bottom: 24px;
+        }
+        .compare-item {
+            display: flex; gap: 4px; align-items: flex-start;
+        }
+        .compare-icon {
+            width: 20px; height: 20px; min-width: 20px;
+            margin-top: 2px;
+        }
+        .compare-icon img {
+            width: 20px; height: 20px; display: block;
+        }
+        .compare-item p {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 400; font-size: 17px; color: #fff;
+            line-height: 1.2;
+        }
+        .compare-bottom {
+            border-top: 1px solid rgba(255,255,255,0.12);
+            padding-top: 20px; text-align: center;
+        }
+        .compare-result-tag {
+            display: inline-block; padding: 2px 8px;
+            border-radius: 12px;
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-size: 12px; font-weight: 500; color: #fff;
+            text-transform: uppercase; letter-spacing: 0.28px;
+            margin-bottom: 4px;
+        }
+        .compare-result-tag.bad-tag { background: #dc1034; }
+        .compare-result-tag.good-tag { background: linear-gradient(154deg, #e5c207 14%, #c16b06 54%); }
+        .compare-result {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 500; font-size: 28px; color: #fff;
+            line-height: 1.02;
+        }
+
+        /* De bonnes conditions text */
+        .conditions-divider {
+            display: flex; align-items: center; gap: 24px;
+            margin-bottom: 24px;
+        }
+        .conditions-divider-line { flex: 1; height: 1px; background: #e2e1e7; }
+        .conditions-divider-text {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 600; font-size: 14px; color: #0b1012;
+            text-transform: uppercase; letter-spacing: 0.32px;
+            opacity: 0.65; white-space: nowrap;
+        }
+        .conditions-title {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 600; font-size: 36px; color: #191919;
+            line-height: 1.1; text-align: center; margin-bottom: 12px;
+        }
+        .conditions-text {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 400; font-size: 20px; color: #000;
+            line-height: 1.2;
+        }
+        .conditions-text strong { font-weight: 700; }
+
+        /* FAQ */
+        .faq-card {
+            padding: 40px 8px 8px;
+            position: relative;
+        }
+        .faq-section { margin-bottom: 0; }
+        .faq-section + .faq-section {
+            border-top: 1px solid #e2e1e7;
+            padding-top: 24px; margin-top: 24px;
+        }
+        .faq-label {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 600; font-size: 14px; color: #0b1012;
+            text-transform: uppercase; letter-spacing: 0.32px;
+            opacity: 0.65; margin-bottom: 24px;
+        }
+        .faq-question {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 600; font-size: 32px; color: #0b1012;
+            line-height: 1.1; margin-bottom: 16px;
+        }
+        .faq-answer {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 400; font-size: 20px; color: #0b1012;
+            line-height: 1.2;
+        }
+        .faq-answer strong { font-weight: 700; }
+        .faq-answer p + p { margin-top: 8px; }
+        .faq-note {
+            background: #222; border-radius: 12px;
+            padding: 16px; margin-top: 16px;
+        }
+        .faq-note-header {
+            display: flex; align-items: center; gap: 4px;
+            margin-bottom: 8px;
+        }
+        .faq-note-icon { font-size: 24px; line-height: 1; }
+        .faq-note-title {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 600; font-size: 20px; color: #fff;
+            line-height: 1.2;
+        }
+        .faq-note-text {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 400; font-size: 20px; color: rgba(255,255,255,0.8);
+            line-height: 1.2; font-style: italic;
+        }
+
+        /* Next Steps card */
+        .nextsteps-card {
+            background: linear-gradient(126deg, rgb(0,102,255) 7%, rgb(25,22,189) 75%);
+            border-radius: 20px;
+            padding: 32px 24px;
+            display: flex; flex-direction: column; gap: 16px;
+        }
+        .nextsteps-label {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 500; font-size: 14px; color: #fff;
+            text-align: center; text-transform: uppercase;
+            letter-spacing: 0.32px;
+        }
+        .nextsteps-title {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 600; font-size: 34px; color: #fff;
+            line-height: 1.1; text-align: center;
+        }
+        .nextsteps-list {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 400; font-size: 20px; color: #fff;
+            line-height: 1.3;
+        }
+        .nextsteps-list p { margin-bottom: 8px; }
+        .nextsteps-list strong { font-weight: 700; }
+
+        /* Assistance card */
+        .assist-card {
+            background: #47b26b;
+            border-radius: 20px;
+            padding: 24px 24px 32px;
+            position: relative; overflow: hidden;
+        }
+        .assist-card .headset {
+            position: absolute; right: 16px; top: 16px;
+            width: 100px; height: 100px; opacity: 0.4;
+        }
+        .assist-title {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 600; font-size: 34px; color: #fff;
+            line-height: 1.1; margin-bottom: 16px;
+        }
+        .assist-text {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 400; font-size: 20px; color: #fff;
+            line-height: 1.2; margin-bottom: 12px;
+        }
+        .assist-contact {
+            font-family: 'Figtree', -apple-system, sans-serif;
+            font-weight: 700; font-size: 20px; color: #fff;
+            line-height: 1.2;
+        }
+
+        /* Mentors */
+        .mentors-section { background: #000; border-radius: 20px; padding: 32px 16px 40px; }
+        .mentors-label {
+            font-family: 'Figtree', sans-serif; font-weight: 700; font-size: 14px;
+            color: #fff; text-transform: uppercase; letter-spacing: 0.32px;
+            text-align: center; margin-bottom: 16px;
+        }
+        .mentors-row-photos { width: 100%; height: auto; border-radius: 0; margin-bottom: 32px; }
+        .mentors-intro-wrap {
+            position: relative; margin-bottom: 24px;
+        }
+        .mentors-intro-wrap::before {
+            content: ''; position: absolute;
+            top: -30px; left: 50%; transform: translateX(-50%);
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(25,60,160,0.3) 0%, transparent 70%);
+            pointer-events: none; z-index: 0;
+        }
+        .mentors-intro-title {
+            font-family: 'Figtree', sans-serif; font-weight: 500; font-size: 36px;
+            color: #fff; text-align: center; line-height: 1.1;
+            position: relative; z-index: 1;
+        }
+        .mentors-intro-title strong { font-weight: 700; }
+        .mentors-intro-text {
+            font-family: 'Figtree', sans-serif; font-weight: 400; font-size: 20px;
+            color: rgba(255,255,255,0.85); line-height: 1.25; margin-bottom: 8px;
+        }
+        .mentors-intro-text strong { font-weight: 700; color: #fff; }
+        .mentor-card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px; margin-top: 24px; overflow: hidden;
+        }
+        .mentor-photos { width: 100%; height: auto; display: block; }
+        .mentor-body { padding: 20px 16px 24px; }
+        .mentor-name {
+            font-family: 'Figtree', sans-serif; font-weight: 300; font-size: 30px;
+            color: #fff; line-height: 1.1; margin-bottom: 12px;
+        }
+        .mentor-desc {
+            font-family: 'Figtree', sans-serif; font-weight: 400; font-size: 19px;
+            color: rgba(255,255,255,0.8); line-height: 1.25; margin-bottom: 20px;
+        }
+        .mentor-desc strong { font-weight: 700; color: #fff; }
+        .mentor-meta-label {
+            font-family: 'Figtree', sans-serif; font-weight: 500; font-size: 12px;
+            color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.24px;
+            margin-bottom: 4px;
+        }
+        .mentor-meta-value {
+            font-family: 'Figtree', sans-serif; font-weight: 400; font-size: 20px;
+            color: rgba(255,255,255,0.7); line-height: 1.2; font-style: italic;
+            margin-bottom: 16px;
+        }
+        /* Agence Radar */
+        .radar-section {
+            background: linear-gradient(217deg, rgb(31,31,31) 13%, rgb(154,51,250) 88%);
+            border-radius: 20px;
+            padding: 32px 24px 24px;
+        }
+        .radar-label {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            color: #fff;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.32px;
+            margin-bottom: 16px;
+        }
+        .radar-logo {
+            width: 220px;
+            height: auto;
+            display: block;
+            margin-bottom: 25px;
+        }
+        .radar-text {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-bottom: 24px;
+        }
+        .radar-text p {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 1.4;
+            color: #fff;
+        }
+        .radar-text strong {
+            font-weight: 700;
+        }
+        .radar-interface {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .radar-card-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 20px;
+        }
+        /* Radar Profile Card */
+        .radar-profile {
+            background: #0b1012;
+            border-radius: 16px;
+            padding: 12px 12px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+            overflow: hidden;
+        }
+        .radar-profile-top {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            width: 100%;
+        }
+        .radar-profile-pic-wrap {
+            position: relative;
+            flex-shrink: 0;
+        }
+        .radar-profile-pic {
+            width: 88px !important;
+            height: 88px !important;
+            border-radius: 50%;
+            display: block;
+            object-fit: cover;
+        }
+        .radar-verified {
+            position: absolute;
+            top: -2px;
+            right: -4px;
+            width: 28px !important;
+            height: 28px !important;
+        }
+        .radar-profile-name {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 600;
+            font-size: 22px;
+            color: white;
+            line-height: normal;
+        }
+        .radar-profile-bio {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-top: 4px;
+        }
+        .radar-profile-bio span {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 400;
+            font-size: 13px;
+            color: rgba(255,255,255,0.72);
+            line-height: 1.2;
+        }
+        .radar-profile-bio .radar-loc {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .radar-profile-bio .radar-pin-icon {
+            width: 12px !important;
+            height: 12px !important;
+        }
+        .radar-profile-divider {
+            width: 100%;
+            height: 1px;
+            background: rgba(255,255,255,0.2);
+        }
+        .radar-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            width: 100%;
+        }
+        .radar-pill {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            height: 26px;
+            border-radius: 100px;
+            padding: 0 10px 0 6px;
+            background: rgba(255,255,255,0.2);
+            font-family: 'Figtree', sans-serif;
+            font-weight: 400;
+            font-size: 12px;
+            color: white;
+            white-space: nowrap;
+            line-height: 1.2;
+        }
+        .radar-pill .rp-icon {
+            width: 15px !important;
+            height: 15px !important;
+            opacity: 0.8;
+            flex-shrink: 0;
+        }
+        .radar-pill-tag {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            height: 26px;
+            border-radius: 100px;
+            padding: 0 10px;
+            font-family: 'Figtree', sans-serif;
+            font-weight: 400;
+            font-size: 12px;
+            white-space: nowrap;
+            line-height: 1.2;
+            position: relative;
+            overflow: hidden;
+        }
+        .radar-pill-tag .rp-icon {
+            width: 15px !important;
+            height: 15px !important;
+            opacity: 0.8;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+        .radar-pill-tag span {
+            position: relative;
+            z-index: 1;
+        }
+        .radar-tag-magnetique {
+            background: linear-gradient(90deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 100%), linear-gradient(90deg, rgb(187,253,253) 0%, rgb(217,251,173) 47.5%, rgb(249,155,251) 100%);
+            color: #0b1012;
+        }
+        .radar-tag-emotif {
+            color: #0b1012;
+        }
+        .radar-tag-emotif::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 100px;
+            background: linear-gradient(100deg, rgb(235,255,255) 5%, rgb(235,255,211) 52%, rgb(106,125,127) 94%);
+            z-index: 0;
+        }
+        .radar-tag-emotif::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 100px;
+            box-shadow: inset 0px 6px 10px 0px rgba(255,255,255,0.6);
+            z-index: 2;
+            pointer-events: none;
+        }
+        .radar-tag-taciturne {
+            color: #0b1012;
+        }
+        .radar-tag-taciturne::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 100px;
+            background: linear-gradient(155deg, rgb(251,243,204) 22%, rgb(190,137,1) 78%);
+            z-index: 0;
+        }
+        .radar-tag-taciturne::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 100px;
+            box-shadow: inset 0px 6px 10px 0px rgba(255,255,255,0.6);
+            z-index: 2;
+            pointer-events: none;
+        }
+        .radar-tag-drole {
+            background: linear-gradient(128deg, rgb(255,2,47) 0%, rgb(55,0,210) 94%);
+            color: white;
+        }
+        .radar-tag-chanteur {
+            color: white;
+        }
+        .radar-tag-chanteur-bg {
+            position: absolute;
+            inset: 0;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover;
+            border-radius: 100px;
+            z-index: 0;
+            pointer-events: none;
+        }
+        /* Radar Search Card */
+        .radar-search {
+            background: #0b1012;
+            border-radius: 16px;
+            padding: 16px;
+            position: relative;
+            overflow: hidden;
+            color: white;
+            font-family: 'Figtree', sans-serif;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .radar-search-title {
+            font-weight: 600;
+            font-size: 20px;
+            margin-bottom: 14px;
+        }
+        .radar-search-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 16px !important;
+            height: 16px !important;
+        }
+        .rs-filter-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            margin-bottom: 12px;
+        }
+        .rs-fpill {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 100px;
+            padding: 5px 5px 5px 9px;
+            font-size: 15px;
+            font-weight: 400;
+        }
+        .rs-fpill-x {
+            width: 22px !important;
+            height: 22px !important;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .rs-fpill-x .rs-xbg {
+            position: absolute;
+            inset: 0;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .rs-fpill-x .rs-xicon {
+            position: absolute;
+            top: 25%;
+            left: 27%;
+            width: 50% !important;
+            height: 50% !important;
+        }
+        .rs-input-wrap {
+            position: relative;
+            margin-bottom: 12px;
+        }
+        .rs-input {
+            background: rgba(255,255,255,0.16);
+            border: 2px solid #8845ff;
+            border-radius: 100px;
+            padding: 0 12px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .rs-input .rs-sparkle {
+            width: 16px !important;
+            height: 16px !important;
+            flex-shrink: 0;
+        }
+        .rs-input span {
+            font-size: 15px;
+            color: white;
+        }
+        .rs-caret {
+            position: absolute;
+            width: 1px;
+            height: 22px;
+            background: white;
+            top: 8px;
+            left: 50px;
+        }
+        .rs-suggestions {
+            background: rgba(255,255,255,0.24);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 8px;
+            padding: 0 8px;
+            margin-bottom: 12px;
+        }
+        .rs-suggestion {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 0;
+            height: 38px;
+            box-sizing: border-box;
+        }
+        .rs-suggestion span {
+            font-size: 15px;
+        }
+        .rs-suggestion-plus {
+            width: 22px !important;
+            height: 22px !important;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .rs-suggestion-plus .rs-pbg {
+            position: absolute;
+            inset: -10%;
+            width: 120% !important;
+            height: 120% !important;
+        }
+        .rs-suggestion-plus .rs-picon {
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            width: 60% !important;
+            height: 60% !important;
+        }
+        .rs-filter {
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            margin-bottom: 10px;
+        }
+        .rs-filter-label {
+            font-weight: 500;
+            font-size: 15px;
+            color: #ecebef;
+            margin-bottom: 8px;
+        }
+        .rs-age-inputs {
+            display: flex;
+            gap: 6px;
+        }
+        .rs-age-pill {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 100px;
+            padding: 0 13px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            font-size: 17px;
+        }
+        .rs-age-pill .rs-grey {
+            color: #6f6d76;
+        }
+        .rs-checkboxes {
+            display: flex;
+            gap: 16px;
+        }
+        .rs-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .rs-checkbox img {
+            width: 19px !important;
+            height: 19px !important;
+            flex-shrink: 0;
+        }
+        .rs-checkbox span {
+            font-size: 15px;
+            color: #c7c5cd;
+        }
+        .rs-checkbox.rs-checked span {
+            color: #f8f8fa;
+        }
+        .rs-colors {
+            display: flex;
+            gap: 4px;
+        }
+        .rs-color {
+            width: 19px !important;
+            height: 19px !important;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .rs-color img {
+            position: absolute;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .rs-color .rs-color-hl {
+            inset: -6%;
+            width: 112% !important;
+            height: 112% !important;
+        }
+        .rs-color .rs-color-check {
+            top: 35%;
+            left: 33%;
+            width: 35% !important;
+            height: 28% !important;
+        }
+        .radar-search-bottom-fade {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(to bottom, rgba(11,16,18,0), #0b1012);
+            pointer-events: none;
+        }
+        .radar-arrow {
+            width: 15px;
+            height: 18px;
+            display: block;
+        }
+        .radar-search-wrap {
+            position: relative;
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .radar-search-wrap .radar-card-img {
+            border-radius: 0;
+        }
+        .radar-search-fade {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 120px;
+            background: linear-gradient(to bottom, rgba(11,16,18,0), #0b1012);
+            pointer-events: none;
+        }
+
+        /* Bande Démo */
+        .demo-section {
+            background-image: url('assets/demo_bg.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            padding: 32px 24px 24px;
+        }
+        .demo-label {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            color: #fff;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.32px;
+            margin-bottom: 8px;
+        }
+        .demo-title {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 600;
+            font-size: 32px;
+            line-height: 1.1;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        .demo-text {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 1.4;
+            color: #fff;
+            margin-bottom: 24px;
+        }
+        .demo-text strong {
+            font-weight: 700;
+        }
+        .demo-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        .demo-step {
+            background: #fff;
+            border-radius: 20px;
+            padding: 12px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .demo-step-num {
+            position: absolute;
+            left: 8px;
+            top: 8px;
+            width: 52px;
+            height: 106px;
+            background: #0b1012;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Figtree', sans-serif;
+            font-weight: 500;
+            font-size: 26px;
+            color: #fff;
+        }
+        .demo-step-title {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 600;
+            font-size: 24px;
+            color: #191919;
+            text-align: center;
+            width: 100%;
+        }
+        .demo-step-arrow {
+            width: 13px !important;
+            height: 15px !important;
+            display: block;
+        }
+        .demo-step-line {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .demo-step-line-icon {
+            width: 22px !important;
+            height: 22px !important;
+            display: block;
+            object-fit: contain;
+        }
+        .demo-step-line-text {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 400;
+            font-size: 18px;
+            color: #0b1012;
+            text-align: center;
+        }
+        .demo-step-mentor {
+            background: #f0f0f5;
+            border-radius: 16px;
+            padding: 8px 12px 12px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            width: 100%;
+        }
+        .demo-step-mentor-icon {
+            width: 22px !important;
+            min-width: 22px;
+            height: 22px !important;
+            display: block;
+            object-fit: contain;
+            margin-top: 2px;
+        }
+        .demo-step-mentor-text {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 500;
+            font-size: 18px;
+            color: #0b1012;
+            line-height: 1.2;
+            flex: 1;
+        }
+        .demo-photos-grid {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 0;
+            margin-bottom: 24px;
+        }
+        .demo-questions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        .demo-questions-title {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 500;
+            font-size: 32px;
+            color: #fff;
+            text-align: center;
+        }
+        .demo-questions-arrow {
+            width: 13px !important;
+            height: 15px !important;
+            display: block;
+        }
+        .demo-email-btn {
+            background: #fff;
+            border-radius: 100px;
+            padding: 10px 16px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            height: 60px;
+        }
+        .demo-email-icon {
+            width: 34px !important;
+            height: 34px !important;
+            display: block;
+            object-fit: contain;
+        }
+        .demo-email-text {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 600;
+            font-size: 22px;
+            color: #0b1012;
+        }
+
+        /* Studio Anyone */
+        .studio-section {
+            background: #0b1012;
+            border-radius: 20px;
+            padding: 24px;
+            overflow: hidden;
+            position: relative;
+        }
+        .studio-label {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            color: #fff;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.42px;
+            line-height: 1.35;
+            margin-bottom: 32px;
+        }
+        .studio-content {
+            position: relative;
+        }
+        .studio-mic {
+            position: absolute;
+            top: -60px;
+            right: -30px;
+            width: 120px !important;
+            height: auto;
+            transform: scaleY(-1) rotate(180deg);
+            pointer-events: none;
+        }
+        .studio-text {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 400;
+            font-size: 17px;
+            line-height: 1.4;
+            color: #f8f8fa;
+            max-width: 75%;
+        }
+        .studio-text p {
+            margin-bottom: 4px;
+        }
+        .studio-text strong {
+            font-weight: 700;
+        }
+        .studio-details {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-top: 46px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+        .studio-detail {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .studio-detail-icon {
+            width: 18px !important;
+            height: 18px !important;
+            display: block;
+            object-fit: contain;
+        }
+        .studio-detail-text {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 400;
+            font-size: 13px;
+            color: #fff;
+            white-space: nowrap;
+            line-height: 1.2;
+        }
+        .studio-mosaic {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 16px;
+            margin-top: 24px;
+        }
+        .studio-grid {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin-top: 8px;
+        }
+
+        /* FAQ */
+        .faq-section {
+            padding: 40px 16px 16px;
+        }
+        .faq-label {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.32px;
+            color: #0b1012;
+            opacity: 0.65;
+            margin-bottom: 16px;
+        }
+        .faq-block {
+            margin-bottom: 0;
+        }
+        .faq-divider {
+            height: 1px;
+            background: #e2e1e7;
+            margin: 24px 0;
+        }
+        .faq-question-wrap {
+            position: relative;
+            margin-bottom: 16px;
+        }
+        .faq-big-q {
+            font-family: 'Caveat', cursive;
+            font-weight: 700;
+            font-size: 100px;
+            line-height: 1;
+            color: #ecebef;
+            position: absolute;
+            left: -16px;
+            top: -30px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .faq-question {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 600;
+            font-size: 26px;
+            line-height: 1.1;
+            color: #0b1012;
+            position: relative;
+            z-index: 1;
+        }
+        .faq-answer {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 1.3;
+            color: #0b1012;
+            position: relative;
+            z-index: 1;
+        }
+        .faq-answer p {
+            margin-bottom: 8px;
+        }
+        .faq-answer p:last-child {
+            margin-bottom: 0;
+        }
+        .faq-note {
+            background: #222;
+            border-radius: 12px;
+            padding: 16px 16px 20px;
+            margin-top: 24px;
+        }
+        .faq-note-header {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+        .faq-note-icon {
+            width: 24px !important;
+            height: 24px !important;
+            display: block;
+            object-fit: contain;
+        }
+        .faq-note-title {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            color: #fff;
+        }
+        .faq-note-text {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 400;
+            font-style: italic;
+            font-size: 16px;
+            line-height: 1.2;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .mentor-bottom-row {
+            width: 100%; height: auto; display: block;
+            margin-top: 12px; opacity: 0.85;
+        }
+
+        /* NEXT STEPS (card68) */
+        .nextsteps-section {
+            background: linear-gradient(126deg, rgb(0, 102, 255) 6.85%, rgb(25, 22, 189) 75.08%);
+            border-radius: 20px;
+            padding: 32px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            color: white;
+        }
+        .nextsteps-label {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.32px;
+            text-align: center;
+            width: 100%;
+        }
+        .nextsteps-title {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 600;
+            font-size: 40px;
+            line-height: 1.1;
+            text-align: center;
+            width: 100%;
+        }
+        .nextsteps-steps {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 400;
+            font-size: 24px;
+            line-height: normal;
+        }
+        .nextsteps-steps strong {
+            font-weight: 700;
+        }
+        .nextsteps-steps p + p {
+            margin-top: 8px;
+        }
+
+        /* ASSISTANCE (card69) */
+        .assistance-section {
+            background: #47B26B;
+            border-radius: 20px;
+            padding: 24px 24px 32px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .assistance-title {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 600;
+            font-size: 40px;
+            line-height: 1.1;
+        }
+        .assistance-text {
+            font-family: 'Figtree', sans-serif;
+            font-weight: 400;
+            font-size: 24px;
+            line-height: normal;
+        }
+        .assistance-text p + p {
+            margin-top: 8px;
+        }
+        .assistance-text strong {
+            font-weight: 700;
+        }
+        .assistance-headset {
+            position: absolute;
+            right: 16px;
+            top: 16px;
+            width: 120px !important;
+            height: 120px !important;
+        }
+
+        @media (min-width: 561px) {
+            body { border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- PAGE TITLE -->
+<div class="page-title">FICHE CANDIDATURE</div>
+
+<!-- TOP HEADER CARD -->
+<div class="main-card">
+    <div class="top-header">
+        <img class="logo" src="assets/6_logo_l.png" alt="anyone:">
+        <span class="programme">Programme 2026</span>
+    </div>
+    <div class="top-divider"></div>
+    <div class="top-section">
+        <p class="top-label">Dossier de candidature</p>
+        <div class="top-stamp"><img src="assets/17_stamp.png" alt="Le Parcours Anyone"></div>
+        <div class="tag-bar">
+            <div class="tag-encours">
+                <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="white" fill-opacity="0.2"/><path d="M9 12.5L11 14.5L15.5 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                EN COURS
+            </div>
+        </div>
+        <div class="welcome">
+            <div class="welcome-pic">
+                <img class="photo" src="assets/theo_photo.png" alt="Théo">
+                <div class="ring"></div>
+            </div>
+            <div class="welcome-msg">
+                <div class="bubble">
+                    <p>👋 Tu n'as pas abandonné au premier obstacle, c'est plutôt bon signe. Voyons si tu as les épaules pour la suite.</p>
+                </div>
+                <p class="welcome-author">— Théo Fernandez<br>co-fondateur d'Anyone</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- QUALIOPI CERTIFICATION -->
+<div class="main-card" style="text-align: center; overflow: hidden;">
+    <div style="padding: 30px 40px 20px;">
+        <img src="assets/53_logoqualiopi_300dpi_avec_marianne_1.png" alt="Qualiopi - processus certifié" style="border-radius: 0;">
+    </div>
+    <div class="cert-blue">
+        <p><strong>Anyone</strong> est un organisme de formation professionnelle déclaré sous le numéro <strong>NDA 11 75 72840 75</strong>, enregistré auprès de la DREETS d'Île-de-France.<br>La certification qualité a été délivrée au titre de la catégorie suivante : actions de formation.</p>
+    </div>
+    <div class="cert-dark">
+        <p>La formation est éligible aux financements via France Travail, l'AFDAS et les OPCO.</p>
+        <p style="margin-top: 12px;">Le financement par le CPF n'est pas encore disponible.</p>
+    </div>
+</div>
+
+<!-- CORRESPONDRE À ANYONE -->
+<div class="main-card">
+    <div class="corresp-card">
+        <p class="corresp-label">TOUT D'ABORD, FAIS UN CHOIX.</p>
+        <h2 class="corresp-title">Tu dois être certain de correspondre à Anyone.</h2>
+        <div class="corresp-list">
+            <div class="corresp-item">
+                <span class="corresp-emoji">🎭</span>
+                <p>La philosophie d'Anyone c'est d'investir sur ses talents pour en faire des <strong>acteurs et des actrices passionnés.</strong></p>
+            </div>
+            <div class="corresp-item">
+                <span class="corresp-emoji">🎬</span>
+                <p>Anyone n'est pas une simple formation en ligne, <strong>c'est une préparation aux castings</strong> qui te demandera de te filmer et de venir tourner à <strong>Paris</strong> pour finaliser ton cursus. (en fonction des options choisies).</p>
+            </div>
+            <div class="corresp-item">
+                <span class="corresp-emoji">❤️‍🔥</span>
+                <p>Tu dois vouloir <strong>te préparer aux castings</strong> pour continuer, si tu vois l'acting comme un simple accès à la célébrité, il ne vaut mieux pas poursuivre.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- LE PARCOURS -->
+<div class="main-card">
+    <div class="parcours-card">
+        <div class="parcours-divider">
+            <span class="parcours-divider-line"></span>
+            <span class="parcours-divider-text">POUR LES PERSONNES CONCERNÉES ⬇️</span>
+            <span class="parcours-divider-line"></span>
+        </div>
+        <h2 class="parcours-title">Le Parcours 👀</h2>
+
+        <div class="parcours-blocks">
+            <!-- Intro blue card -->
+            <div class="parcours-intro">
+                <p>🎭 Tu vas te préparer aux <strong>castings</strong> avec ton <strong>mentor du cinéma</strong>.</p>
+                <p>💡Des <strong>déclics puissants</strong> pour t'améliorer et passer à l'<strong>étape supérieure</strong> dans le jeu d'acteur.</p>
+            </div>
+
+            <div class="parcours-arrow">↓</div>
+
+            <!-- Bloc 1 -->
+            <div class="parcours-bloc">
+                <div class="parcours-bloc-text">
+                    <span class="parcours-bloc-num">Bloc 1</span>
+                    <span class="parcours-bloc-name">Sincérité au cinéma</span>
+                    <span class="parcours-bloc-desc">Comment ne plus faire semblant ?</span>
+                </div>
+                <div class="parcours-bloc-icon" style="background:linear-gradient(156deg,#ffaaaa 8%,#c672ee 91%)"><img src="assets/bloc_heart.svg" alt=""></div>
+            </div>
+            <!-- Bloc 2 -->
+            <div class="parcours-bloc">
+                <div class="parcours-bloc-icon" style="background:linear-gradient(156deg,#5161f7 8%,#d152c2 48%,#ff5d5d 91%)"><img src="assets/bloc_emotion.svg" alt=""></div>
+                <div class="parcours-bloc-text">
+                    <span class="parcours-bloc-num">Bloc 2</span>
+                    <span class="parcours-bloc-name">Émotion</span>
+                    <span class="parcours-bloc-desc">Comment faire venir ses vraies émotions ?</span>
+                </div>
+            </div>
+            <!-- Bloc 3 -->
+            <div class="parcours-bloc">
+                <div class="parcours-bloc-text">
+                    <span class="parcours-bloc-num">Bloc 3</span>
+                    <span class="parcours-bloc-name">Surjeu face-caméra</span>
+                    <span class="parcours-bloc-desc">Comment ne pas en faire trop et jouer juste ?</span>
+                </div>
+                <div class="parcours-bloc-icon" style="background:linear-gradient(156deg,#fac280 8%,#38a5c7 91%)"><img src="assets/bloc_surjeu.svg" alt=""></div>
+            </div>
+            <!-- Bloc 4 -->
+            <div class="parcours-bloc">
+                <div class="parcours-bloc-icon" style="background:linear-gradient(147deg,#6ac9e7 10%,#023aff 96%)"><img src="assets/bloc_focus.svg" alt=""></div>
+                <div class="parcours-bloc-text">
+                    <span class="parcours-bloc-num">Bloc 4</span>
+                    <span class="parcours-bloc-name">Focus</span>
+                    <span class="parcours-bloc-desc">Comment être dans l'instant quand on joue ?</span>
+                </div>
+            </div>
+
+            <!-- Tag tournage -->
+            <div class="parcours-tag">🎬 <strong>On te conseille de valider ce bloc en studio</strong></div>
+
+            <!-- Bloc 5 -->
+            <div class="parcours-bloc">
+                <div class="parcours-bloc-text">
+                    <span class="parcours-bloc-num">Bloc 5</span>
+                    <span class="parcours-bloc-name">Personnage</span>
+                    <span class="parcours-bloc-desc">Comment interpréter des personnages uniques et convaincants ?</span>
+                </div>
+                <div class="parcours-bloc-icon" style="background:linear-gradient(144deg,#bf6ae7 7%,#f8990b 96%)"><img src="assets/bloc_perso.svg" alt=""></div>
+            </div>
+            <!-- Bloc 6 -->
+            <div class="parcours-bloc">
+                <div class="parcours-bloc-icon" style="background:linear-gradient(144deg,#e5e76a 7%,#f86e0b 96%)"><img src="assets/bloc_corps.svg" alt=""></div>
+                <div class="parcours-bloc-text">
+                    <span class="parcours-bloc-num">Bloc 6</span>
+                    <span class="parcours-bloc-name">Corps</span>
+                    <span class="parcours-bloc-desc">Comment se mouvoir face à la caméra ?</span>
+                </div>
+            </div>
+            <!-- Bloc 7 -->
+            <div class="parcours-bloc">
+                <div class="parcours-bloc-text">
+                    <span class="parcours-bloc-num">Bloc 7</span>
+                    <span class="parcours-bloc-name">Dialogue</span>
+                    <span class="parcours-bloc-desc">Comment jouer avec l'autre et connaître sa place ?</span>
+                </div>
+                <div class="parcours-bloc-icon" style="background:linear-gradient(144deg,#ce6ae7 7%,#0bf8cd 96%)"><img src="assets/bloc_dialogue.svg" alt=""></div>
+            </div>
+
+            <!-- Tag tournage -->
+            <div class="parcours-tag">🎬 <strong>On te conseille de valider ce bloc en studio</strong></div>
+
+            <!-- Bloc 8 -->
+            <div class="parcours-bloc">
+                <div class="parcours-bloc-icon" style="background:linear-gradient(144deg,#f9699d 7%,#3e74ff 96%)"><img src="assets/bloc_casting.svg" alt=""></div>
+                <div class="parcours-bloc-text">
+                    <span class="parcours-bloc-num">Bloc 8</span>
+                    <span class="parcours-bloc-name">Castings</span>
+                    <span class="parcours-bloc-desc">Comment passer un casting ? + Mise en situation</span>
+                </div>
+            </div>
+
+            <!-- Tag tournage -->
+            <div class="parcours-tag">🎬 <strong>On te conseille de valider ce bloc en studio</strong></div>
+
+            <!-- Bloc 9 -->
+            <div class="parcours-bloc">
+                <div class="parcours-bloc-text">
+                    <span class="parcours-bloc-num">Bloc 9</span>
+                    <span class="parcours-bloc-name">Bande démo</span>
+                    <span class="parcours-bloc-desc">Tournage de la bande démo dans nos studios avec une caméra cinéma.</span>
+                </div>
+                <div class="parcours-bloc-icon" style="background:linear-gradient(144deg,rgba(65,22,37,0.85) 7%,#ff022f 96%)"><img src="assets/bloc_demo.svg" alt=""></div>
+            </div>
+            <!-- Bloc 10 -->
+            <div class="parcours-bloc">
+                <div class="parcours-bloc-icon" style="background:linear-gradient(144deg,#d6f034 7%,#05928a 96%)"><img src="assets/bloc_reseaux.svg" alt=""></div>
+                <div class="parcours-bloc-text">
+                    <span class="parcours-bloc-num">Bloc 10</span>
+                    <span class="parcours-bloc-name">Réseaux</span>
+                    <span class="parcours-bloc-desc">On te référence dans notre liste, on envoie ton profil aux recruteurs et on t'envoie des castings.</span>
+                </div>
+            </div>
+
+            <!-- Option -->
+            <div class="parcours-bloc parcours-option">
+                <div class="parcours-option-btn">+</div>
+                <div class="parcours-bloc-text">
+                    <span class="parcours-bloc-num">EN OPTION</span>
+                    <span class="parcours-bloc-desc">Des chapitres additionnels peuvent être ajoutés gratuitement lors de ton cursus.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- LES CHIFFRES -->
+<div class="main-card">
+    <div class="chiffres">
+        <h2 class="chiffres-title">Les chiffres</h2>
+        <div class="chiffres-grid">
+            <div class="chiffre-cell">
+                <span class="chiffre-emoji">🌟</span>
+                <div class="chiffre-stat">
+                    <span class="chiffre-num">+ de 900</span>
+                    <span class="chiffre-line">passages en <mark>casting</mark></span>
+                </div>
+                <span class="chiffre-sub">Grâce à nos événements Camion &amp; Journée Casting.</span>
+            </div>
+            <div class="chiffre-cell">
+                <span class="chiffre-emoji">🎬</span>
+                <div class="chiffre-stat">
+                    <span class="chiffre-num">+ de 1000</span>
+                    <span class="chiffre-line"><mark>tournages</mark> au studio</span>
+                </div>
+                <span class="chiffre-sub">Du lundi au vendredi au 14 Boulevard Saint-Germain.</span>
+            </div>
+            <div class="chiffre-cell">
+                <span class="chiffre-emoji">🐥</span>
+                <div class="chiffre-stat">
+                    <span class="chiffre-line">Depuis</span>
+                    <span class="chiffre-num"><mark>2023</mark></span>
+                </div>
+                <span class="chiffre-sub">La première (la seule?) école d'acting hybride.</span>
+            </div>
+            <div class="chiffre-cell">
+                <span class="chiffre-emoji">💸</span>
+                <div class="chiffre-stat">
+                    <span class="chiffre-num"><mark>Moins cher</mark></span>
+                    <span class="chiffre-line">que les écoles traditionnelles</span>
+                </div>
+                <span class="chiffre-sub">Rendre l'acting accessible est notre priorité.</span>
+            </div>
+        </div>
+        <div class="freecasting-card">
+            <div class="freecasting-logo">
+                <img src="assets/fc_logo.png" alt="free casting">
+            </div>
+            <p class="freecasting-desc"><strong>Anyone</strong> centralise toutes les annonces de France sur son propre <strong>site de castings.</strong></p>
+        </div>
+    </div>
+</div>
+
+<!-- UGC PARTNERSHIP -->
+<div class="dark-full">
+    <div class="ugc-section">
+        <div class="ugc-card">
+            <div class="ugc-logos">
+                <img class="ugc-logo" src="assets/ugc_cover.png" alt="UGC Illimité + Anyone">
+            </div>
+            <p class="ugc-text">Grâce aux cinémas <strong>UGC</strong>, chaque membre éligible bénéficie d'un abonnement <strong>UGC Illimité 7J/7</strong> pendant 1 an.</p>
+        </div>
+    </div>
+</div>
+
+<!-- SELFTAPE / COMPARISON (SANS vs AVEC ANYONE) -->
+<div class="dark-full">
+    <div class="selftape-section">
+        <!-- Header text -->
+        <div class="selftape-header">
+            <p class="selftape-label">À SAVOIR</p>
+            <p class="selftape-title">Les castings en France et aux USA commencent par une <span class="highlight">selftape</span></p>
+            <p class="selftape-sub">Déménager à Paris <strong>n'est plus nécessaire.</strong></p>
+            <p class="selftape-sub" style="margin-top:6px;">Tu peux être pris pour un <strong>rôle</strong> sans arrêter ton travail ou tes études.</p>
+        </div>
+
+        <!-- SANS Anyone -->
+        <div class="compare-card sans">
+            <div class="compare-tag sans-tag"><strong>Sans</strong> <span>Anyone</span></div>
+            <div class="compare-plan">
+                <div class="compare-list">
+                    <div class="compare-item"><span class="compare-icon"><img src="assets/emoji_ohno.png" alt=""></span><p>Déménager à Paris</p></div>
+                    <div class="compare-item"><span class="compare-icon"><img src="assets/emoji_ohno.png" alt=""></span><p>Job alimentaire pour payer tes cours</p></div>
+                    <div class="compare-item"><span class="compare-icon"><img src="assets/emoji_ohno.png" alt=""></span><p>Aucun contact dans le métier, tu avances à l'aveugle</p></div>
+                    <div class="compare-item"><span class="compare-icon"><img src="assets/emoji_ohno.png" alt=""></span><p>Tu postules aux castings sans savoir si ton profil est bon</p></div>
+                    <div class="compare-item"><span class="compare-icon"><img src="assets/emoji_ohno.png" alt=""></span><p>Du mal à trouver des castings fiables</p></div>
+                </div>
+                <div class="compare-bottom">
+                    <span class="compare-result-tag bad-tag">RÉSULTAT</span>
+                    <p class="compare-result">Tu abandonnes</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- AVEC Anyone -->
+        <div class="compare-card avec">
+            <div class="compare-tag avec-tag"><strong>Avec</strong> <span>Anyone</span></div>
+            <div class="compare-plan">
+                <div class="compare-list">
+                    <div class="compare-item"><span class="compare-icon"><img src="assets/emoji_happy.png" alt=""></span><p>Tes premiers castings sans quitter ton job ou tes études</p></div>
+                    <div class="compare-item"><span class="compare-icon"><img src="assets/emoji_happy.png" alt=""></span><p>Selftapes depuis chez toi, tournages à Paris</p></div>
+                    <div class="compare-item"><span class="compare-icon"><img src="assets/emoji_happy.png" alt=""></span><p>Des mentors du milieu qui te suivent jusqu'à tes premiers castings</p></div>
+                    <div class="compare-item"><span class="compare-icon"><img src="assets/emoji_happy.png" alt=""></span><p>Conseils clairs sur ton profil et ta trajectoire</p></div>
+                    <div class="compare-item"><span class="compare-icon"><img src="assets/emoji_happy.png" alt=""></span><p>Scènes qualité cinéma, à envoyer aux castings</p></div>
+                    <div class="compare-item"><span class="compare-icon"><img src="assets/emoji_happy.png" alt=""></span><p>Réseau d'acteurs qui te tirent vers le haut</p></div>
+                </div>
+                <div class="compare-bottom">
+                    <span class="compare-result-tag good-tag">RÉSULTAT</span>
+                    <p class="compare-result">Tu te lances</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MENTORS -->
+<div class="dark-full">
+    <div class="mentors-section">
+        <p class="mentors-label">Les mentors</p>
+        <img class="mentors-row-photos" src="assets/mentors_row_photos.png" alt="Les mentors">
+        <div class="mentors-intro-wrap">
+            <p class="mentors-intro-title">Ton <strong>mentor</strong>, c'est ton<br><strong>coach personnel.</strong></p>
+        </div>
+        <p class="mentors-intro-text">Choisis ton mentor avant de faire l'appel.</p>
+        <p class="mentors-intro-text">Tu vas apprendre <strong>depuis chez toi</strong> et le rencontrer dans nos studios.</p>
+        <p class="mentors-intro-text">Vous allez travailler jusqu'au tournage de ta <strong>bande démo.</strong></p>
+
+        <!-- Kait Tenison -->
+        <div class="mentor-card">
+            <img class="mentor-photos" src="assets/kait_photos.png" alt="">
+            <div class="mentor-body">
+                <p class="mentor-name">Kait Tenison</p>
+                <p class="mentor-desc">Plus de <strong>20 films et séries</strong> à son actif, une carrière internationale entre l'Europe et <strong>Hollywood.</strong> Elle joue dans des productions cultes comme <strong>Dune 2,</strong> puis partage des scènes marquantes avec <strong>Adam Driver</strong> ou encore <strong>Matt Damon.</strong></p>
+                <p class="mentor-meta-label">A joué avec</p>
+                <p class="mentor-meta-value">Léa Seydoux, Jonathan Cohen, Adam Driver, Matt Damon.</p>
+                <p class="mentor-meta-label">Spécialité</p>
+                <p class="mentor-meta-value">Personnage</p>
+                <img class="mentor-bottom-row" src="assets/kait_bottom.png" alt="">
+            </div>
+        </div>
+
+        <!-- Lauréna Thellier -->
+        <div class="mentor-card">
+            <img class="mentor-photos" src="assets/laurena_photos.png" alt="">
+            <div class="mentor-body">
+                <p class="mentor-name">Lauréna Thellier</p>
+                <p class="mentor-desc">9 <strong>longs métrages</strong> à son actif et une nomination aux <strong>César</strong>. Lauréna assume des <strong>scènes intenses</strong> aux côtés d'artistes <strong>d'exception</strong>, elle a su faire de ses <strong>particularités</strong> une <strong>force</strong> pour grimper aux sommets.</p>
+                <p class="mentor-meta-label">A joué avec</p>
+                <p class="mentor-meta-value">Vincent Cassel, Mélanie Laurent, François Civil.</p>
+                <p class="mentor-meta-label">Spécialité</p>
+                <p class="mentor-meta-value">Émotion.</p>
+                <img class="mentor-bottom-row" src="assets/laurena_bottom.png" alt="">
+            </div>
+        </div>
+
+        <!-- Philippe du Janerand -->
+        <div class="mentor-card">
+            <img class="mentor-photos" src="assets/philippe_photos.png" alt="">
+            <div class="mentor-body">
+                <p class="mentor-name">Philippe du Janerand</p>
+                <p class="mentor-desc">Acteur de composition unique, il cumule les films cultes comme <strong>Nikita</strong>, <strong>Les Choristes</strong> ou encore <strong>Taxi</strong>. Il marque le public et tourne avec des réalisateurs de renom comme <strong>Luc Besson</strong>. <strong>Philippe</strong> est un visage du cinéma français.</p>
+                <p class="mentor-meta-label">Films notables</p>
+                <p class="mentor-meta-value">Nikita, Monsieur Batignole, Taxi, Les Choristes.</p>
+                <p class="mentor-meta-label">Réalisateurs</p>
+                <p class="mentor-meta-value">Luc Besson, Gérard Jugnot, Gérard Pirès, Christophe Barratier, Patrice Leconte</p>
+                <p class="mentor-meta-label">Spécialité</p>
+                <p class="mentor-meta-value">Personnage.</p>
+                <img class="mentor-bottom-row" src="assets/philippe_bottom.png" alt="">
+            </div>
+        </div>
+
+        <!-- Aurore Broutin -->
+        <div class="mentor-card">
+            <img class="mentor-photos" src="assets/aurore_photos.png" alt="">
+            <div class="mentor-body">
+                <p class="mentor-name">Aurore Broutin</p>
+                <p class="mentor-desc"><strong>Directrice de casting</strong> d'exception, sa participation sur des films primés aux <strong>César</strong> lui forge une <strong>réputation prestigieuse</strong> dans le milieu du casting cinéma.</p>
+                <p class="mentor-meta-label">Films notables</p>
+                <p class="mentor-meta-value">Été 85, Samba, La tête haute, Suprême.</p>
+                <p class="mentor-meta-label">Réalisateurs</p>
+                <p class="mentor-meta-value">Cédric Klapish, Éric Tolédano et Olivier Nakache.</p>
+                <p class="mentor-meta-label">Spécialité</p>
+                <p class="mentor-meta-value">Sincérité.</p>
+                <img class="mentor-bottom-row" src="assets/aurore_bottom.png" alt="">
+            </div>
+        </div>
+
+        <!-- Théo Augier -->
+        <div class="mentor-card">
+            <img class="mentor-photos" src="assets/theo_photos.png" alt="">
+            <div class="mentor-body">
+                <p class="mentor-name">Théo Augier</p>
+                <p class="mentor-desc">Des séries <strong>Netflix</strong> américaines au <strong>cinéma</strong>, en passant par <strong>Amazon</strong> Prime en France, Théo est un acteur <strong>Franco-Américain</strong> à la carrière <strong>internationale</strong>.</p>
+                <p class="mentor-meta-label">A joué avec</p>
+                <p class="mentor-meta-value">George Clooney, Sandrine Kiberlain, Anna Cathcart.</p>
+                <p class="mentor-meta-label">Spécialité</p>
+                <p class="mentor-meta-value">Focus.</p>
+                <img class="mentor-bottom-row" src="assets/theo_bottom.png" alt="">
+            </div>
+        </div>
+
+        <!-- Fouad Benhammou -->
+        <div class="mentor-card">
+            <img class="mentor-photos" src="assets/fouad_photos.png" alt="">
+            <div class="mentor-body">
+                <p class="mentor-name">Fouad Benhammou</p>
+                <p class="mentor-desc">Apporte son regard et sa perspective de <strong>réalisateur</strong> expérimenté. Ses conseils seront surtout axés autour du <strong>rapport à la caméra</strong>.</p>
+                <p class="mentor-meta-label">A dirigé</p>
+                <p class="mentor-meta-value">Jonathan Cohen, Jemima West</p>
+                <p class="mentor-meta-label">Spécialité</p>
+                <p class="mentor-meta-value">Corps.</p>
+                <img class="mentor-bottom-row" src="assets/fouad_bottom.png" alt="">
+            </div>
+        </div>
+
+        <!-- Charlotte Durand-Raucher -->
+        <div class="mentor-card">
+            <img class="mentor-photos" src="assets/charlotte_photos.png" alt="">
+            <div class="mentor-body">
+                <p class="mentor-name">Charlotte Durand-Raucher</p>
+                <p class="mentor-desc">Experte des <strong>émotions</strong>, Charlotte a permis à des centaines d'élèves d'accéder à leur <strong>ressenti et de tourner rapidement.</strong></p>
+                <p class="mentor-meta-label">Spécialité</p>
+                <p class="mentor-meta-value">Émotion.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AGENCE RADAR -->
+<div style="margin: 0 12px 12px;">
+    <div class="radar-section">
+        <p class="radar-label">AGENCE ARTISTIQUE</p>
+        <img class="radar-logo" src="assets/radar_logo.png" alt="radar">
+        <div class="radar-text">
+            <p>Chaque élève est référencé dans la base de données de l'<strong>Agence Radar</strong>.</p>
+            <p>Ton profil doit être entièrement complété et tous les exercices validés pour en tirer pleinement profit.</p>
+            <p>Lorsqu'un casting correspond à ton profil, l'agence te contacte directement.</p>
+        </div>
+        <div class="radar-interface">
+            <div class="radar-profile">
+                <div class="radar-profile-top">
+                    <div class="radar-profile-pic-wrap">
+                        <img class="radar-profile-pic" src="assets/radar_profile_photo.png" alt="">
+                        <img class="radar-verified" src="assets/radar_verified.svg" alt="">
+                    </div>
+                    <div>
+                        <div class="radar-profile-name">Ton prénom</div>
+                        <div class="radar-profile-bio">
+                            <span>Ton genre</span>
+                            <div class="radar-loc">
+                                <img class="radar-pin-icon" src="assets/radar_pin.svg" alt="">
+                                <span>Ta ville</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="radar-profile-divider"></div>
+                <div class="radar-pills">
+                    <div class="radar-pill">
+                        <img class="rp-icon" src="assets/radar_icon_calendar.svg" alt="">
+                        Ton âge
+                    </div>
+                    <div class="radar-pill">
+                        <img class="rp-icon" src="assets/radar_icon_height.svg" alt="">
+                        Ta taille
+                    </div>
+                    <div class="radar-pill">
+                        <img class="rp-icon" src="assets/radar_icon_eye.svg" alt="">
+                        Couleur des yeux
+                    </div>
+                    <div style="width:100%;height:0;"></div>
+                    <div class="radar-pill-tag radar-tag-magnetique">
+                        <span>Magnétique</span>
+                    </div>
+                    <div class="radar-pill-tag radar-tag-emotif">
+                        <span>Émotif</span>
+                    </div>
+                    <div class="radar-pill-tag radar-tag-taciturne">
+                        <span>Taciturne</span>
+                    </div>
+                    <div class="radar-pill-tag radar-tag-drole">
+                        <span>Drôle</span>
+                    </div>
+                    <div class="radar-pill-tag radar-tag-chanteur">
+                        <img class="radar-tag-chanteur-bg" src="assets/radar_pill_chanteur.png" alt="">
+                        <span>Chanteur</span>
+                    </div>
+                </div>
+            </div>
+            <img class="radar-arrow" src="assets/radar_arrow.png" alt="">
+            <div class="radar-search">
+                <img class="radar-search-close" src="assets/rs_close.svg" alt="">
+                <div class="radar-search-title">Recherche de profils</div>
+                <div class="rs-filter-pills">
+                    <div class="rs-fpill">
+                        Homme
+                        <div class="rs-fpill-x"><img class="rs-xbg" src="assets/rs_pill_bg.svg" alt=""><img class="rs-xicon" src="assets/rs_x_icon.svg" alt=""></div>
+                    </div>
+                    <div class="rs-fpill">
+                        18-55
+                        <div class="rs-fpill-x"><img class="rs-xbg" src="assets/rs_pill_bg.svg" alt=""><img class="rs-xicon" src="assets/rs_x_icon.svg" alt=""></div>
+                    </div>
+                    <div class="rs-fpill">
+                        Yeux
+                        <div class="rs-fpill-x"><img class="rs-xbg" src="assets/rs_pill_bg.svg" alt=""><img class="rs-xicon" src="assets/rs_x_icon.svg" alt=""></div>
+                    </div>
+                </div>
+                <div class="rs-input-wrap">
+                    <div class="rs-input">
+                        <img class="rs-sparkle" src="assets/rs_sparkle.svg" alt="">
+                        <span>Da</span>
+                    </div>
+                    <div class="rs-caret"></div>
+                </div>
+                <div class="rs-suggestions">
+                    <div class="rs-suggestion">
+                        <span>Danse</span>
+                        <div class="rs-suggestion-plus"><img class="rs-pbg" src="assets/rs_plus_bg.svg" alt=""><img class="rs-picon" src="assets/rs_plus_icon.svg" alt=""></div>
+                    </div>
+                    <div class="rs-suggestion">
+                        <span>Danseur</span>
+                        <div class="rs-suggestion-plus"><img class="rs-pbg" src="assets/rs_plus_bg.svg" alt=""><img class="rs-picon" src="assets/rs_plus_icon.svg" alt=""></div>
+                    </div>
+                </div>
+                <div class="rs-filter">
+                    <div class="rs-filter-label">Âge</div>
+                    <div class="rs-age-inputs">
+                        <div class="rs-age-pill"><span class="rs-grey">de</span>&nbsp;18</div>
+                        <div class="rs-age-pill"><span class="rs-grey">à</span>&nbsp;55</div>
+                    </div>
+                </div>
+                <div class="rs-filter">
+                    <div class="rs-filter-label">Genre</div>
+                    <div class="rs-checkboxes">
+                        <div class="rs-checkbox"><img src="assets/rs_checkbox_empty.svg" alt=""><span>Femme</span></div>
+                        <div class="rs-checkbox rs-checked">
+                            <span style="position:relative;width:19px;height:19px;flex-shrink:0;">
+                                <img src="assets/rs_checkbox_checked.svg" alt="" style="position:absolute;inset:0;width:100%!important;height:100%!important;">
+                                <img src="assets/rs_check_mark.svg" alt="" style="position:absolute;top:27%;left:19%;width:58%!important;height:46%!important;">
+                            </span>
+                            <span>Homme</span>
+                        </div>
+                        <div class="rs-checkbox"><img src="assets/rs_checkbox_empty.svg" alt=""><span>Autre</span></div>
+                    </div>
+                </div>
+                <div class="rs-filter">
+                    <div class="rs-filter-label">Couleur des yeux</div>
+                    <div class="rs-colors">
+                        <div class="rs-color"><img src="assets/rs_color0.svg" alt=""></div>
+                        <div class="rs-color"><img src="assets/rs_color1.svg" alt=""></div>
+                        <div class="rs-color">
+                            <img src="assets/rs_color2.svg" alt="">
+                            <img class="rs-color-hl" src="assets/rs_color2_hl.svg" alt="">
+                            <img class="rs-color-check" src="assets/rs_color2_check.svg" alt="">
+                        </div>
+                        <div class="rs-color"><img src="assets/rs_color3.svg" alt=""></div>
+                        <div class="rs-color"><img src="assets/rs_color4.svg" alt=""></div>
+                        <div class="rs-color"><img src="assets/rs_color5.svg" alt=""></div>
+                        <div class="rs-color"><img src="assets/rs_color6.svg" alt=""></div>
+                        <div class="rs-color"><img src="assets/rs_color7.svg" alt=""></div>
+                        <div class="rs-color"><img src="assets/rs_color8.svg" alt=""></div>
+                        <div class="rs-color"><img src="assets/rs_color9.svg" alt=""></div>
+                    </div>
+                </div>
+                <div class="radar-search-bottom-fade"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BANDE DEMO -->
+<div style="margin: 0 12px 12px;">
+    <div class="demo-section">
+        <p class="demo-label">ACTION</p>
+        <p class="demo-title">La bande démo 🎬</p>
+        <div class="demo-text">
+            <p>C'est l'étape la plus importante de ton cursus.</p>
+            <p style="margin-top:16px;">Tu vas concrétiser tout ce que tu as appris lors d'un <strong>tournage</strong> avec un réalisateur.</p>
+            <p>Cette <strong>bande démo</strong> sera la vitrine de tes capacités et de ton <strong>profil</strong> pour les agences.</p>
+            <p>Ce tournage aura lieu dans notre studio à <strong>Paris</strong>.</p>
+        </div>
+
+        <div class="demo-steps">
+            <!-- Step 1 -->
+            <div class="demo-step">
+                <div class="demo-step-num">1</div>
+                <p class="demo-step-title">4-5 scènes à préparer</p>
+                <img class="demo-step-arrow" src="assets/demo_arrow.svg" alt="">
+                <div class="demo-step-line">
+                    <img class="demo-step-line-icon" src="assets/demo_news_icon.svg" alt="">
+                    <span class="demo-step-line-text">Brouillons</span>
+                </div>
+                <img class="demo-step-arrow" src="assets/demo_arrow.svg" alt="">
+                <div class="demo-step-mentor">
+                    <img class="demo-step-mentor-icon" src="assets/demo_video_icon.png" alt="">
+                    <p class="demo-step-mentor-text">Ton mentor t'aide à choisir les bonnes scènes.</p>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="demo-step">
+                <div class="demo-step-num">2</div>
+                <p class="demo-step-title">3 scènes choisies</p>
+                <img class="demo-step-arrow" src="assets/demo_arrow.svg" alt="">
+                <div class="demo-step-line">
+                    <img class="demo-step-line-icon" src="assets/demo_news_icon.svg" alt="">
+                    <span class="demo-step-line-text">Brouillons</span>
+                </div>
+                <img class="demo-step-arrow" src="assets/demo_arrow.svg" alt="">
+                <div class="demo-step-mentor">
+                    <img class="demo-step-mentor-icon" src="assets/demo_video_icon.png" alt="">
+                    <p class="demo-step-mentor-text">Ton mentor valide les 3 scènes pour le tournage.</p>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="demo-step">
+                <div class="demo-step-num">3</div>
+                <p class="demo-step-title">3 scènes de 1 minute</p>
+                <img class="demo-step-arrow" src="assets/demo_arrow.svg" alt="">
+                <div class="demo-step-line">
+                    <img class="demo-step-line-icon" src="assets/demo_camera_icon.svg" alt="">
+                    <span class="demo-step-line-text">Tournage</span>
+                </div>
+                <img class="demo-step-arrow" src="assets/demo_arrow.svg" alt="">
+                <div class="demo-step-mentor">
+                    <img class="demo-step-mentor-icon" src="assets/demo_video_icon.png" alt="">
+                    <p class="demo-step-mentor-text">Ta bande démo est prête à être envoyée aux agences.</p>
+                </div>
+            </div>
+        </div>
+
+        <img class="demo-photos-grid" src="assets/demo_photos_grid.png" alt="">
+
+        <div class="demo-questions">
+            <p class="demo-questions-title">Des questions ?</p>
+            <img class="demo-questions-arrow" src="assets/demo_arrow_white.svg" alt="">
+            <div class="demo-email-btn">
+                <img class="demo-email-icon" src="assets/demo_envelope.svg" alt="">
+                <span class="demo-email-text">support@anyone.fr</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- STUDIO -->
+<div style="margin: 0 12px 12px;">
+    <div class="studio-section">
+        <p class="studio-label">TOURNE DÈS QUE POSSIBLE 🎥</p>
+        <div class="studio-content">
+            <img class="studio-mic" src="assets/studio_mic.png" alt="">
+            <div class="studio-text">
+                <p><strong>Anyone</strong> est là pour te donner ta chance, à toi de la saisir mais <strong>on ne veut pas de gens passifs</strong>.</p>
+                <p>On tourne <strong>toute l'année</strong>.</p>
+                <p>L'objectif d'Anyone c'est d'ouvrir <strong>10 studios</strong> partout en France avant 2030.</p>
+                <p>Ces tournages sont <strong>facultatifs</strong> et <strong>à la demande</strong> selon tes <strong>disponibilités</strong>.</p>
+            </div>
+            <div class="studio-details">
+                <div class="studio-detail">
+                    <img class="studio-detail-icon" src="assets/studio_time_icon.svg" alt="">
+                    <span class="studio-detail-text">Lundi–Vendredi 10h à 18h</span>
+                </div>
+                <div class="studio-detail">
+                    <img class="studio-detail-icon" src="assets/studio_pin_icon.svg" alt="">
+                    <span class="studio-detail-text">14 Boulevard Saint-Germain</span>
+                </div>
+            </div>
+        </div>
+        <img class="studio-mosaic" src="assets/studio_mosaic.png" alt="">
+        <img class="studio-grid" src="assets/studio_grid.png" alt="">
+    </div>
+</div>
+
+<!-- DE BONNES CONDITIONS (fond blanc) -->
+<div class="main-card">
+    <div style="padding: 56px 24px 24px;">
+        <!-- Divider CE QUI T'ATTEND -->
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+            <div style="flex: 1; height: 1px; background: #e2e1e7;"></div>
+            <span style="font-family: 'Figtree', sans-serif; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.32px; color: #0b1012; opacity: 0.65;">ce qui t'attend</span>
+            <div style="flex: 1; height: 1px; background: #e2e1e7;"></div>
+        </div>
+        <!-- Title + Text -->
+        <p style="font-family: 'Figtree', sans-serif; font-weight: 600; font-size: 28px; line-height: 1.1; color: #191919; margin-bottom: 12px;">☀️ De bonnes conditions</p>
+        <div style="font-family: 'Figtree', sans-serif; font-weight: 400; font-size: 17px; line-height: 1.4; color: #000;">
+            <p>Personne ne peut être admis sans être <strong>serein financièrement</strong>.</p>
+            <p style="margin-top: 16px;">Même si tu passes l'étape d'admission ✅, s'impliquer avec son mentor pendant 1 an, s'engager sur la bande démo, les tournages, les agences... ça demande un <strong>équilibre parfait</strong> dans ton esprit pour suivre le cursus dans les meilleures conditions.</p>
+        </div>
+    </div>
+    <div style="padding: 0 16px 16px;">
+        <div class="services-plan">
+            <div class="services-top">
+                <p class="services-title">Nos services</p>
+                <p class="services-subtitle">à partir de 1399€, <em>payable jusqu'à 10x</em></p>
+            </div>
+            <div class="services-list">
+                <div class="service-row">
+                    <div class="service-icon"><img src="assets/icon_mentor.png" alt=""></div>
+                    <div class="service-text"><span class="service-name">Mentor dédié</span><span class="service-desc">pendant 1 an</span></div>
+                </div>
+                <div class="service-row">
+                    <div class="service-icon"><img src="assets/icon_bande_demo.png" alt=""></div>
+                    <div class="service-text"><span class="service-name">Tournage Bande démo</span><span class="service-desc">en studio, 🎞️ montage offert</span></div>
+                </div>
+                <div class="service-row">
+                    <div class="service-icon service-icon-emoji" style="background: rgba(255,255,255,0.12);"><span>💬</span></div>
+                    <div class="service-text"><span class="service-name">Exercices</span><span class="service-desc">avec des correctifs en vidéo</span></div>
+                </div>
+                <div class="service-row">
+                    <div class="service-icon service-icon-emoji" style="background: rgba(255,255,255,0.12);"><span>👤</span></div>
+                    <div class="service-text"><span class="service-name">Espace élève</span><span class="service-desc">pour gérer tes vidéos et selftapes</span></div>
+                </div>
+                <div class="service-row">
+                    <div class="service-icon service-icon-emoji" style="background: linear-gradient(59deg, rgba(244,211,116,0.2) 15%, rgba(244,211,116,0.6) 79%);"><span>📣</span></div>
+                    <div class="service-text"><span class="service-name">Castings</span><span class="service-desc">reçois des annonces de castings</span></div>
+                </div>
+                <div class="service-row">
+                    <div class="service-icon" style="background: linear-gradient(124deg, rgb(243,155,170) 58%, rgb(123,0,210) 100%); overflow:hidden; position:relative;"><img src="assets/icon_agence.png" alt="" style="position:absolute; top:-5px; right:-8px; width:60px; height:60px; object-fit:cover; border-radius:0;"></div>
+                    <div class="service-text"><span class="service-name">Agence Radar</span><span class="service-desc">profil élève dans l'agence artistique</span></div>
+                </div>
+                <div class="service-row">
+                    <div class="service-icon"><img src="assets/icon_shooting.png" alt=""></div>
+                    <div class="service-text"><span class="service-name">Shooting photo</span><span class="service-desc">en fin de parcours</span></div>
+                </div>
+                <div class="service-row">
+                    <div class="service-icon service-icon-emoji" style="background: rgba(11,16,18,0.72);"><span>🎥</span></div>
+                    <div class="service-text"><span class="service-name">Coachings</span><span class="service-desc">filmés en studio</span></div>
+                </div>
+                <div class="service-row">
+                    <div class="service-icon"><img src="assets/icon_photos.png" alt=""></div>
+                    <div class="service-text"><span class="service-name">Photos</span><span class="service-desc">lors des tournages au studio</span></div>
+                </div>
+                <div class="service-row">
+                    <div class="service-icon" style="background: #01124e; display:flex; align-items:center; justify-content:center;"><img src="assets/icon_ugc.png" alt="" style="width:42px; height:auto; object-fit:contain; border-radius:0;"></div>
+                    <div class="service-text"><span class="service-name">Abonnement UGC</span><span class="service-desc">illimité 7j/7 pendant 1 an</span></div>
+                </div>
+                <div class="service-row">
+                    <div class="service-icon service-icon-emoji" style="background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);"><span>🎬</span></div>
+                    <div class="service-text"><span class="service-name">Rencontres</span><span class="service-desc">avec des directeurs de casting</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FAQ -->
+<div class="main-card">
+    <div class="faq-section">
+        <!-- Q1: Comment fait-on les exercices ? -->
+        <div class="faq-block">
+            <p class="faq-label">FAQ</p>
+            <div class="faq-question-wrap">
+                <span class="faq-big-q">?</span>
+                <p class="faq-question">Comment fait-on les exercices ? 🧑‍🎓</p>
+            </div>
+            <p class="faq-answer">Tu vas pouvoir utiliser le site pour communiquer avec ton mentor et envoyer tes vidéos avec ton téléphone ou ton ordinateur.</p>
+            <div class="faq-note">
+                <div class="faq-note-header">
+                    <img class="faq-note-icon" src="assets/faq_lightbulb.svg" alt="">
+                    <span class="faq-note-title">Notes de Théo</span>
+                </div>
+                <p class="faq-note-text">En donnant le meilleur de toi-même à chaque étape, ton mentor pourra t'aider à progresser davantage et à te perfectionner.</p>
+            </div>
+        </div>
+
+        <!-- Q2: En combien de temps -->
+        <div class="faq-block">
+            <div class="faq-divider"></div>
+            <div class="faq-question-wrap">
+                <span class="faq-big-q">?</span>
+                <p class="faq-question">En combien de temps dois-je avoir fini ? ⏰</p>
+            </div>
+            <div class="faq-answer">
+                <p>Le parcours se fait à ton rythme mais <strong>attention...</strong></p>
+                <p>L'équipe d'<strong>Anyone</strong> ne te laissera jamais t'éloigner de tes objectifs, ton mentor te <strong>suivra régulièrement</strong> pour te mettre à jour.</p>
+                <p>Tu peux avoir terminé tous tes exercices en <strong>3 à 6 mois</strong> si tu travailles tous les jours.</p>
+                <p>Le plus important c'est de bien intégrer les <strong>déclics</strong> que tu auras avec ton mentor. Le tournage de la bande démo se fait à la toute fin.</p>
+            </div>
+        </div>
+
+        <!-- Q3: Peut-on ajouter des options -->
+        <div class="faq-block">
+            <div class="faq-divider"></div>
+            <div class="faq-question-wrap">
+                <span class="faq-big-q">?</span>
+                <p class="faq-question">Peut-on ajouter des options en cours d'année ❓</p>
+            </div>
+            <p class="faq-answer"><strong>Oui,</strong> mais <strong>attention</strong> les prix sont susceptibles d'augmenter et certains <strong>services</strong> proposés par <strong>Anyone</strong> peuvent être <strong>retirés</strong> dans l'avenir.</p>
+        </div>
+
+        <!-- Q4: Options de paiement -->
+        <div class="faq-block">
+            <div class="faq-divider"></div>
+            <div class="faq-question-wrap">
+                <span class="faq-big-q">?</span>
+                <p class="faq-question">Quelles sont les options de paiement ? 🏦</p>
+            </div>
+            <div class="faq-answer">
+                <p>Parce que nous savons qu'il est parfois difficile pour certains de s'y retrouver financièrement.</p>
+                <p>Nous mettons en place la possibilité de payer en plusieurs fois pour financer ton cursus.</p>
+            </div>
+        </div>
+
+        <!-- Rappel technique -->
+        <div class="faq-rappel" style="margin-top: 32px;">
+            <div class="faq-note" style="background: #222;">
+                <div class="faq-note-header">
+                    <img class="faq-note-icon" src="assets/faq_alert.svg" alt="">
+                    <span class="faq-note-title">Rappel technique</span>
+                </div>
+                <ul class="faq-note-text" style="padding-left: 20px; list-style: disc;">
+                    <li>1 seul lien de règlement des frais d'inscription</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- NEXT STEPS -->
+<div class="main-card">
+    <div style="padding: 16px;">
+        <div class="nextsteps-section">
+            <p class="nextsteps-label">ÉTAPES SUIVANTES</p>
+            <p class="nextsteps-title">C'est quoi la suite ? 🚀</p>
+            <div class="nextsteps-steps">
+                <p><strong>1</strong>. Fais ton appel de candidature.</p>
+                <p><strong>2.</strong> Détermine les actions possibles.<br><strong>3. Commence à travailler.</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ASSISTANCE -->
+<div class="main-card">
+    <div style="padding: 16px;">
+        <div class="assistance-section">
+            <img class="assistance-headset" src="assets/assistance_headset.svg" alt="">
+            <p class="assistance-title">Assistance 24/7</p>
+            <div class="assistance-text">
+                <p>Tu profites d'une assistance pour toutes tes questions concernant ton parcours, les castings ou l'acting en général.</p>
+                <p><strong>📞 01 89 70 70 13  ou support@anyone.fr</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BOTTOM SPACING -->
+<div style="height: 24px;"></div>
+
+</body>
+</html>

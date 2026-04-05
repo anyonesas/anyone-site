@@ -1,0 +1,7 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 16 144" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="left side">
+<path id="spacer" d="M0 16C0 7.16344 7.16344 0 16 0V48H0V16Z" fill="var(--fill-0, #F8F8FA)"/>
+<path id="spacer_2" d="M0 48H16V96H0V48Z" fill="var(--fill-0, #F8F8FA)"/>
+<rect id="spacer_3" y="96" width="16" height="48" fill="var(--fill-0, #F8F8FA)"/>
+</g>
+</svg>
