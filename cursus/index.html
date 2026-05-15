@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Anyone — Configurateur Cursus Sur-Mesure</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0f;
+  --bg-soft:#12121a;
+  --card:#17171f;
+  --card-hover:#1d1d27;
+  --border:#26262f;
+  --border-active:#3b82f6;
+  --text:#fff;
+  --muted:#8b8b94;
+  --muted-2:#5a5a63;
+  --blue:#06f;
+  --blue-2:#1916bd;
+  --accent:#ff8c42;
+  --green:#22c55e;
+  --red:#ef4444;
+  --gold:#f5c518;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--bg);color:var(--text);font-family:'Figtree',-apple-system,BlinkMacSystemFont,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{min-height:100vh;overflow-x:hidden}
+
+/* Aurora background */
+.aurora{
+  position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+}
+.aurora::before,.aurora::after{
+  content:'';position:absolute;width:80vw;height:80vw;border-radius:50%;
+  filter:blur(120px);opacity:.35;
+}
+.aurora::before{
+  top:-30vw;left:-20vw;
+  background:radial-gradient(circle,#06f 0%,transparent 60%);
+  animation:float1 18s ease-in-out infinite;
+}
+.aurora::after{
+  bottom:-40vw;right:-20vw;
+  background:radial-gradient(circle,#ff8c42 0%,transparent 60%);
+  animation:float2 22s ease-in-out infinite;
+}
+@keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(15vw,10vw)}}
+@keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(-15vw,-10vw)}}
+
+.wrap{
+  position:relative;z-index:1;
+  max-width:880px;margin:0 auto;padding:32px 20px 200px;
+}
+
+/* Header */
+.hero{text-align:center;margin-bottom:40px}
+.logo{
+  display:inline-flex;align-items:center;gap:10px;
+  font-weight:800;font-size:14px;letter-spacing:.18em;text-transform:uppercase;
+  color:#fff;opacity:.7;margin-bottom:28px;
+}
+.logo-dot{width:8px;height:8px;background:var(--blue);border-radius:50%;box-shadow:0 0 16px var(--blue)}
+.hero h1{
+  font-size:clamp(40px,7vw,72px);font-weight:800;line-height:1.02;letter-spacing:-.03em;
+  background:linear-gradient(180deg,#fff 0%,#a8a8b0 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:14px;
+}
+.hero h1 .hand{
+  font-family:'Caveat',cursive;font-weight:700;color:var(--accent);
+  -webkit-text-fill-color:var(--accent);font-size:.95em;display:inline-block;
+  transform:rotate(-3deg);
+}
+.hero p{font-size:18px;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.5}
+
+/* Sticky price bar */
+.price-bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:100;
+  background:rgba(10,10,15,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-top:1px solid var(--border);
+  padding:14px 20px;
+}
+.price-bar-inner{
+  max-width:880px;margin:0 auto;display:flex;align-items:center;gap:16px;justify-content:space-between;
+}
+.price-label{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-weight:600}
+.price-amount{
+  font-size:clamp(32px,6vw,48px);font-weight:800;letter-spacing:-.02em;line-height:1;
+  font-variant-numeric:tabular-nums;
+  background:linear-gradient(135deg,#fff,#a8c5ff);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1);
+}
+.price-amount.bump{transform:scale(1.08)}
+.price-amount .euro{font-size:.6em;opacity:.7;margin-right:2px}
+.cta-btn{
+  background:linear-gradient(135deg,var(--blue) 0%,var(--blue-2) 100%);
+  color:#fff;border:none;border-radius:14px;padding:14px 22px;font-size:15px;font-weight:700;
+  font-family:inherit;cursor:pointer;letter-spacing:.01em;
+  box-shadow:0 8px 24px rgba(6,102,255,.4),inset 0 1px 0 rgba(255,255,255,.2);
+  transition:transform .15s,box-shadow .2s;white-space:nowrap;
+}
+.cta-btn:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(6,102,255,.5),inset 0 1px 0 rgba(255,255,255,.2)}
+.cta-btn:active{transform:translateY(0)}
+.cta-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* Sections */
+.section{margin-bottom:28px}
+.section-head{
+  display:flex;align-items:baseline;gap:12px;margin-bottom:14px;padding:0 4px;
+}
+.section-num{
+  font-family:'Caveat',cursive;font-weight:700;font-size:24px;color:var(--accent);
+}
+.section-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--muted)}
+
+/* Option cards */
+.card{
+  background:var(--card);border:1.5px solid var(--border);border-radius:20px;
+  padding:22px;margin-bottom:12px;
+  transition:border-color .2s,background .2s,transform .15s;
+  position:relative;overflow:hidden;
+}
+.card:hover{border-color:#36363f;background:var(--card-hover)}
+.card.active{border-color:var(--border-active);background:linear-gradient(180deg,rgba(6,102,255,.08),transparent 80%)}
+.card.active::before{
+  content:'';position:absolute;inset:0;border-radius:20px;pointer-events:none;
+  box-shadow:inset 0 0 0 1px rgba(6,102,255,.3),0 0 32px rgba(6,102,255,.15);
+}
+
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:6px}
+.card-title{font-size:22px;font-weight:700;letter-spacing:-.01em;line-height:1.2}
+.card-price-tag{
+  display:inline-flex;align-items:center;gap:4px;
+  background:rgba(255,140,66,.12);color:var(--accent);
+  padding:4px 10px;border-radius:999px;font-size:13px;font-weight:700;
+  white-space:nowrap;
+}
+.card-desc{font-size:15px;color:var(--muted);line-height:1.45;margin-top:4px}
+
+/* Options grid */
+.opts{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.opt{
+  flex:1;min-width:90px;
+  background:var(--bg-soft);border:1.5px solid var(--border);
+  border-radius:14px;padding:14px 16px;cursor:pointer;
+  font-family:inherit;font-size:15px;font-weight:600;color:var(--text);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:all .15s;text-align:center;
+}
+.opt:hover{border-color:#3a3a44;background:#1d1d27}
+.opt.selected{
+  border-color:var(--blue);background:rgba(6,102,255,.12);color:#fff;
+  box-shadow:0 0 0 3px rgba(6,102,255,.15);
+}
+.opt-check{
+  width:18px;height:18px;border-radius:50%;border:1.5px solid var(--border);
+  display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:all .15s;
+}
+.opt.selected .opt-check{background:var(--blue);border-color:var(--blue)}
+.opt.selected .opt-check::after{
+  content:'';width:8px;height:8px;background:#fff;border-radius:50%;
+}
+
+/* Number stepper */
+.stepper{
+  display:flex;align-items:center;gap:0;margin-top:18px;
+  background:var(--bg-soft);border:1.5px solid var(--border);border-radius:14px;
+  width:fit-content;overflow:hidden;
+}
+.stepper button{
+  width:48px;height:48px;background:transparent;border:none;color:#fff;
+  font-size:22px;font-weight:600;cursor:pointer;font-family:inherit;
+  transition:background .15s;
+}
+.stepper button:hover{background:#1d1d27}
+.stepper button:disabled{opacity:.3;cursor:not-allowed}
+.stepper-val{
+  min-width:60px;text-align:center;font-size:20px;font-weight:700;
+  font-variant-numeric:tabular-nums;padding:0 8px;
+}
+.stepper-hint{
+  margin-top:10px;font-size:13px;color:var(--muted);
+  display:flex;align-items:center;gap:6px;
+}
+.free-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  background:rgba(34,197,94,.15);color:var(--green);
+  padding:3px 9px;border-radius:999px;font-size:12px;font-weight:700;
+}
+
+/* UGC reveal */
+.reveal{
+  max-height:0;opacity:0;overflow:hidden;
+  transition:max-height .4s cubic-bezier(.4,0,.2,1),opacity .3s,margin .3s;
+  margin-top:0;
+}
+.reveal.open{max-height:1400px;opacity:1;margin-top:12px}
+
+/* Disabled / included state */
+.card.included{
+  border-color:rgba(34,197,94,.4);
+  background:linear-gradient(180deg,rgba(34,197,94,.06),transparent 80%);
+}
+.card.included .opts,.card.included .stepper,.card.included .stepper-hint{
+  opacity:.4;pointer-events:none;filter:saturate(.3);
+}
+.included-ribbon{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(34,197,94,.15);color:var(--green);
+  padding:5px 11px;border-radius:999px;font-size:12px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.08em;margin-top:10px;
+}
+
+/* Checkbox list */
+.checklist{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.checkbox{
+  display:flex;align-items:center;gap:12px;
+  background:var(--bg-soft);border:1.5px solid var(--border);
+  border-radius:12px;padding:14px 16px;cursor:pointer;
+  font-size:15px;line-height:1.35;transition:all .15s;
+  font-family:inherit;text-align:left;color:var(--text);width:100%;
+}
+.checkbox:hover{border-color:#3a3a44;background:#1d1d27}
+.checkbox.checked{border-color:var(--green);background:rgba(34,197,94,.08)}
+.checkbox-box{
+  width:22px;height:22px;border-radius:7px;border:1.5px solid var(--border);
+  display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:all .15s;
+}
+.checkbox.checked .checkbox-box{background:var(--green);border-color:var(--green)}
+.checkbox.checked .checkbox-box::after{
+  content:'';width:6px;height:11px;border:solid #0a0a0f;border-width:0 2.5px 2.5px 0;
+  transform:rotate(45deg);margin-top:-2px;
+}
+.ugc-status{
+  margin-top:14px;padding:14px 16px;border-radius:12px;
+  font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center;
+}
+.ugc-status.ok{background:rgba(34,197,94,.12);color:#86efac;border:1px solid rgba(34,197,94,.3)}
+.ugc-status.ko{background:rgba(245,197,24,.08);color:#f0d27a;border:1px solid rgba(245,197,24,.25)}
+
+.ugc-eligible{
+  background:linear-gradient(135deg,rgba(245,197,24,.1),rgba(245,197,24,.04));
+  border:1.5px solid rgba(245,197,24,.3);
+  border-radius:16px;padding:16px 20px;margin-bottom:12px;
+  display:flex;gap:14px;align-items:center;
+}
+.ugc-eligible .star{font-size:32px;flex-shrink:0}
+.ugc-eligible-text{font-size:15px;line-height:1.4}
+.ugc-eligible-text strong{color:var(--gold)}
+
+.ugc-warn{
+  background:rgba(245,197,24,.08);border:1px solid rgba(245,197,24,.25);
+  border-radius:12px;padding:14px 16px;margin-top:12px;
+  font-size:14px;line-height:1.45;color:#f0d27a;
+  display:flex;gap:10px;align-items:flex-start;
+}
+.ugc-warn .icon{font-size:18px;flex-shrink:0}
+
+.ugc-form{margin-top:14px;display:flex;flex-direction:column;gap:10px}
+.input{
+  background:var(--bg-soft);border:1.5px solid var(--border);
+  border-radius:12px;padding:14px 16px;color:#fff;font-family:inherit;font-size:15px;
+  width:100%;
+  transition:border-color .15s;
+}
+.input:focus{outline:none;border-color:var(--blue)}
+.input::placeholder{color:var(--muted-2)}
+.input-label{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:4px;padding-left:4px}
+
+/* Pass All Access warning */
+.alert{
+  background:linear-gradient(135deg,rgba(239,68,68,.15),rgba(239,68,68,.05));
+  border:1.5px solid rgba(239,68,68,.4);
+  border-radius:16px;padding:16px 18px;margin-top:14px;
+  font-size:14px;line-height:1.45;color:#fca5a5;
+  display:flex;gap:12px;align-items:flex-start;
+}
+.alert strong{color:#fff;display:block;margin-bottom:4px}
+.alert .icon{font-size:20px;flex-shrink:0}
+
+.allaccess-note{
+  background:var(--bg-soft);border-radius:12px;padding:12px 14px;
+  font-size:13px;color:var(--muted);line-height:1.5;margin-top:10px;
+}
+.allaccess-note ul{list-style:none;padding:0;margin:6px 0 0}
+.allaccess-note li{padding-left:16px;position:relative;margin-bottom:3px}
+.allaccess-note li::before{content:'•';position:absolute;left:4px;color:var(--accent)}
+
+/* Summary breakdown */
+.summary{
+  background:var(--card);border:1.5px solid var(--border);border-radius:20px;
+  padding:24px;margin-top:24px;
+}
+.summary-title{
+  font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;
+  color:var(--muted);margin-bottom:14px;
+}
+.summary-row{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:10px 0;border-bottom:1px dashed var(--border);
+  font-size:15px;
+}
+.summary-row:last-child{border-bottom:none}
+.summary-row.empty{color:var(--muted-2);font-style:italic;justify-content:center;padding:20px 0}
+.summary-row .name{color:#d4d4dc}
+.summary-row .val{font-weight:700;font-variant-numeric:tabular-nums;color:#fff}
+.summary-row.total{
+  border-top:1.5px solid var(--border);border-bottom:none;
+  padding-top:16px;margin-top:6px;
+}
+.summary-row.total .name{font-size:16px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.08em}
+.summary-row.total .val{font-size:28px;color:var(--accent)}
+
+/* Foot */
+.foot{
+  text-align:center;margin-top:32px;padding-top:24px;
+  font-size:13px;color:var(--muted-2);
+}
+.foot a{color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--muted-2)}
+
+@media (max-width:560px){
+  .wrap{padding:24px 16px 180px}
+  .card{padding:18px}
+  .price-bar{padding:12px 16px}
+  .cta-btn{padding:12px 16px;font-size:14px}
+  .opts{gap:8px}
+  .opt{padding:12px;font-size:14px}
+  .summary{padding:18px}
+}
+</style>
+</head>
+<body>
+<div class="aurora"></div>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="logo"><span class="logo-dot"></span>Anyone</div>
+    <h1>Configure ton<br><span class="hand">cursus sur-mesure</span></h1>
+    <p>Choisis tes options, le prix se met à jour en temps réel. Pas de surprise, pas de petits caractères.</p>
+  </header>
+
+  <!-- Parcours -->
+  <div class="section">
+    <div class="section-head"><span class="section-num">01</span><span class="section-title">Le parcours</span></div>
+    <div class="card" id="card-parcours">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Parcours & Mentor</div>
+          <div class="card-desc">Le cœur du cursus — formation complète et accompagnement personnalisé.</div>
+        </div>
+        <div class="card-price-tag">+1 300 €</div>
+      </div>
+      <div class="opts" data-group="parcours">
+        <button class="opt" data-val="oui"><span class="opt-check"></span>Oui</button>
+        <button class="opt" data-val="non"><span class="opt-check"></span>Non</button>
+        <button class="opt" data-val="accelere"><span class="opt-check"></span>Accéléré</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shooting -->
+  <div class="section">
+    <div class="section-head"><span class="section-num">02</span><span class="section-title">Le shooting</span></div>
+    <div class="card" id="card-shooting">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Shooting Photo</div>
+          <div class="card-desc">Une séance pour des photos pro qui claquent dans ton book.</div>
+        </div>
+        <div class="card-price-tag">+250 €</div>
+      </div>
+      <div class="opts" data-group="shooting">
+        <button class="opt" data-val="oui"><span class="opt-check"></span>Oui</button>
+        <button class="opt" data-val="non"><span class="opt-check"></span>Non</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tournages -->
+  <div class="section">
+    <div class="section-head"><span class="section-num">03</span><span class="section-title">Les tournages</span></div>
+    <div class="card" id="card-tournages">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Tournages studio</div>
+          <div class="card-desc">Sessions en studio pour créer ton contenu. <span id="tournage-bonus" style="display:none"><span class="free-badge">★ 2 offertes avec le parcours</span></span></div>
+        </div>
+        <div class="card-price-tag">250 € / session</div>
+      </div>
+      <div class="stepper">
+        <button id="t-minus" type="button" aria-label="Moins">−</button>
+        <span class="stepper-val" id="t-val">0</span>
+        <button id="t-plus" type="button" aria-label="Plus">+</button>
+      </div>
+      <div class="stepper-hint" id="t-hint">Aucune session sélectionnée</div>
+      <div class="included-ribbon" id="t-included" style="display:none">✨ Inclus dans le Pass All Access — illimité</div>
+    </div>
+  </div>
+
+  <!-- Bande démo -->
+  <div class="section">
+    <div class="section-head"><span class="section-num">04</span><span class="section-title">La bande démo</span></div>
+    <div class="card" id="card-bande">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Bande démo</div>
+          <div class="card-desc">Ton showreel pro, monté par nos équipes.</div>
+        </div>
+        <div class="card-price-tag">+599 €</div>
+      </div>
+      <div class="opts" data-group="bande">
+        <button class="opt" data-val="pro"><span class="opt-check"></span>Pro (599 €)</button>
+        <button class="opt" data-val="sans"><span class="opt-check"></span>Sans</button>
+      </div>
+      <div class="included-ribbon" id="b-included" style="display:none">✨ Bande démo Pro incluse dans le Pass All Access</div>
+    </div>
+  </div>
+
+  <!-- UGC reveal -->
+  <div class="reveal" id="ugc-section">
+    <div class="section">
+      <div class="section-head"><span class="section-num">05</span><span class="section-title">Bonus débloqué</span></div>
+      <div class="card" id="card-ugc">
+        <div class="ugc-eligible">
+          <span class="star">🎬</span>
+          <div class="ugc-eligible-text">Tu es éligible au <strong>Pass UGC</strong>.<br>Une carte UGC pour 1 an, offerte avec ton cursus.</div>
+        </div>
+        <div class="card-head" style="margin-top:6px">
+          <div>
+            <div class="card-title">Activer le Pass UGC ?</div>
+            <div class="card-desc">Offert dès 1 890 € de cursus.</div>
+          </div>
+        </div>
+        <div class="opts" data-group="ugc">
+          <button class="opt" data-val="oui"><span class="opt-check"></span>Oui</button>
+          <button class="opt" data-val="non"><span class="opt-check"></span>Non</button>
+        </div>
+        <div class="reveal" id="ugc-details">
+          <div class="input-label" style="margin-top:6px">Conditions d'éligibilité — toutes obligatoires</div>
+          <div class="checklist" id="ugc-conditions">
+            <button class="checkbox" data-cond="alma" type="button"><span class="checkbox-box"></span>Le candidat a payé en une fois ou avec Alma</button>
+            <button class="checkbox" data-cond="france" type="button"><span class="checkbox-box"></span>Le candidat va utiliser son pass en France</button>
+            <button class="checkbox" data-cond="mainpropre" type="button"><span class="checkbox-box"></span>Le candidat peut venir chercher son bon d'échange en main propre</button>
+            <button class="checkbox" data-cond="proximite" type="button"><span class="checkbox-box"></span>Le candidat habite à moins d'une heure en voiture d'un UGC</button>
+          </div>
+          <div class="ugc-status ko" id="ugc-status">
+            <span>⏳</span><span>Coche toutes les conditions pour activer le Pass UGC.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pass Anyone -->
+  <div class="section">
+    <div class="section-head"><span class="section-num">06</span><span class="section-title">Les pass annuels</span></div>
+    <div class="card" id="card-passanyone">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Pass Anyone — 1 an</div>
+          <div class="card-desc">Accès aux events Anyone pendant 12 mois.</div>
+        </div>
+        <div class="card-price-tag">+399 €</div>
+      </div>
+      <div class="opts" data-group="passanyone">
+        <button class="opt" data-val="oui"><span class="opt-check"></span>Oui</button>
+        <button class="opt" data-val="non"><span class="opt-check"></span>Non</button>
+      </div>
+    </div>
+
+    <div class="card" id="card-allaccess">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Pass All Access — 1 an</div>
+          <div class="card-desc">Le pass des gros consommateurs de studio.</div>
+        </div>
+        <div class="card-price-tag">+2 800 €</div>
+      </div>
+      <div class="allaccess-note">
+        <ul>
+          <li>Tournages illimités (max 2 h/jour)</li>
+          <li>Bande démo Pro incluse → décoche bande démo ci-dessus</li>
+          <li><strong style="color:#fca5a5">Parcours non-inclus</strong> — obligatoirement combiné avec le parcours</li>
+        </ul>
+      </div>
+      <div class="opts" data-group="allaccess">
+        <button class="opt" data-val="oui"><span class="opt-check"></span>Oui</button>
+        <button class="opt" data-val="non"><span class="opt-check"></span>Non</button>
+      </div>
+      <div class="alert" id="allaccess-alert" style="display:none">
+        <span class="icon">🚫</span>
+        <div>
+          <strong>Pas de Pass All Access sans le parcours</strong>
+          Active d'abord « Parcours & Mentor » pour pouvoir prendre le Pass All Access.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary" id="summary">
+    <div class="summary-title">Récap de ton cursus</div>
+    <div id="summary-rows">
+      <div class="summary-row empty">Commence à choisir tes options ↑</div>
+    </div>
+    <div class="summary-row total">
+      <span class="name">Total</span>
+      <span class="val"><span id="sum-total">0</span> €</span>
+    </div>
+  </div>
+
+  <div class="foot">
+    Configurateur indicatif — l'inscription définitive se fait sur <a href="https://candidature.anyone.fr/">candidature.anyone.fr</a>.
+  </div>
+</div>
+
+<!-- Sticky price bar -->
+<div class="price-bar">
+  <div class="price-bar-inner">
+    <div>
+      <div class="price-label">Ton cursus</div>
+      <div class="price-amount" id="price-amount"><span class="euro">€</span><span id="price-num">0</span></div>
+    </div>
+    <button class="cta-btn" id="cta" onclick="goCandidature()">Candidater →</button>
+  </div>
+</div>
+
+<script>
+const state = {
+  parcours: null,   // 'oui' | 'non' | 'accelere' | null
+  shooting: null,
+  tournages: 0,
+  bande: null,
+  ugc: null,
+  passanyone: null,
+  allaccess: null,
+  ugcConditions: {alma:false, france:false, mainpropre:false, proximite:false},
+};
+// Mémoire pour restaurer les choix quand on désactive le Pass All Access
+const stash = { tournages:null, bande:null };
+
+const PRICES = {
+  parcoursOui: 1300,
+  parcoursAccelere: 1580, // parcours + supplément accéléré
+  shooting: 250,
+  tournageUnit: 250,
+  bandePro: 599,
+  passAnyone: 399,
+  allAccess: 2800,
+};
+
+function computeTournagesCost(){
+  if(state.tournages <= 0) return 0;
+  // 2 sessions offertes si le parcours est pris (oui ou accéléré)
+  const freeSessions = (state.parcours === 'oui' || state.parcours === 'accelere') ? 2 : 0;
+  const paidSessions = Math.max(0, state.tournages - freeSessions);
+  return paidSessions * PRICES.tournageUnit;
+}
+
+function allAccessActive(){
+  return state.allaccess === 'oui' && (state.parcours === 'oui' || state.parcours === 'accelere');
+}
+
+function ugcAllChecked(){
+  const c = state.ugcConditions;
+  return c.alma && c.france && c.mainpropre && c.proximite;
+}
+
+function lineItems(){
+  const items = [];
+  if(state.parcours === 'oui')      items.push({k:'Parcours & Mentor', v: PRICES.parcoursOui});
+  if(state.parcours === 'accelere') items.push({k:'Parcours & Mentor (Accéléré)', v: PRICES.parcoursAccelere});
+  if(state.shooting === 'oui')      items.push({k:'Shooting Photo', v: PRICES.shooting});
+
+  const aa = allAccessActive();
+
+  // Tournages — absorbés par le Pass All Access
+  if(state.tournages > 0 && !aa){
+    const cost = computeTournagesCost();
+    const free = (state.parcours === 'oui' || state.parcours === 'accelere') ? Math.min(2, state.tournages) : 0;
+    const label = free > 0
+      ? `Tournages studio × ${state.tournages} (${free} offerte${free>1?'s':''})`
+      : `Tournages studio × ${state.tournages}`;
+    items.push({k: label, v: cost});
+  }
+  // Bande démo — absorbée par le Pass All Access
+  if(state.bande === 'pro' && !aa) items.push({k:'Bande démo Pro', v: PRICES.bandePro});
+
+  if(state.passanyone === 'oui')   items.push({k:'Pass Anyone — 1 an', v: PRICES.passAnyone});
+  if(aa) items.push({k:'Pass All Access — 1 an (tournages illimités + bande démo Pro incluse)', v: PRICES.allAccess});
+
+  if(state.ugc === 'oui' && ugcAllChecked()) items.push({k:'Pass UGC', v: 0, badge:'OFFERT'});
+  return items;
+}
+
+function total(){
+  return lineItems().reduce((s,i)=>s+i.v,0);
+}
+
+function format(n){
+  return n.toLocaleString('fr-FR');
+}
+
+let lastTotal = 0;
+function render(){
+  // Active card visuals
+  document.querySelectorAll('.opts').forEach(grp=>{
+    const key = grp.dataset.group;
+    const val = state[key];
+    grp.querySelectorAll('.opt').forEach(b=>{
+      b.classList.toggle('selected', b.dataset.val === val);
+    });
+    const card = grp.closest('.card');
+    if(card){
+      const isActive = val && val !== 'non' && val !== 'sans';
+      card.classList.toggle('active', !!isActive);
+    }
+  });
+
+  // All Access absorbe tournages + bande démo
+  const aa = allAccessActive();
+  const cardTournages = document.getElementById('card-tournages');
+  const cardBande = document.getElementById('card-bande');
+  cardTournages.classList.toggle('included', aa);
+  cardBande.classList.toggle('included', aa);
+  document.getElementById('t-included').style.display = aa ? 'inline-flex' : 'none';
+  document.getElementById('b-included').style.display = aa ? 'inline-flex' : 'none';
+
+  // Tournages card
+  const hasParcours = state.parcours === 'oui' || state.parcours === 'accelere';
+  document.getElementById('tournage-bonus').style.display = (hasParcours && !aa) ? 'inline' : 'none';
+  cardTournages.classList.toggle('active', state.tournages > 0 && !aa);
+  document.getElementById('t-val').textContent = state.tournages;
+  document.getElementById('t-minus').disabled = state.tournages <= 0;
+  const tHint = document.getElementById('t-hint');
+  if(state.tournages === 0){
+    tHint.innerHTML = 'Aucune session sélectionnée';
+  } else {
+    const free = hasParcours ? Math.min(2, state.tournages) : 0;
+    const paid = state.tournages - free;
+    if(free > 0 && paid === 0){
+      tHint.innerHTML = `<span class="free-badge">★ ${free} session${free>1?'s':''} 100% offerte${free>1?'s':''}</span>`;
+    } else if(free > 0){
+      tHint.innerHTML = `<span class="free-badge">★ ${free} offerte${free>1?'s':''}</span> + ${paid} × 250 € = <strong>${format(paid*250)} €</strong>`;
+    } else {
+      tHint.innerHTML = `${state.tournages} × 250 € = <strong>${format(state.tournages*250)} €</strong>`;
+    }
+  }
+
+  // Compute current total
+  const t = total();
+
+  // UGC reveal (price >= 1890)
+  const ugcEligible = t >= 1890 || (t + 0 >= 1890); // current total threshold
+  // But the threshold should be the total BEFORE the UGC line. UGC is 0€ so doesn't shift it.
+  // However hiding ugc resets selection
+  const ugcSection = document.getElementById('ugc-section');
+  if(ugcEligible){
+    ugcSection.classList.add('open');
+  } else {
+    ugcSection.classList.remove('open');
+    if(state.ugc){ state.ugc = null; /* reset silently */ }
+  }
+
+  // UGC details + checklist
+  const ugcDetails = document.getElementById('ugc-details');
+  ugcDetails.classList.toggle('open', state.ugc === 'oui');
+  document.querySelectorAll('#ugc-conditions .checkbox').forEach(cb=>{
+    cb.classList.toggle('checked', !!state.ugcConditions[cb.dataset.cond]);
+  });
+  const status = document.getElementById('ugc-status');
+  if(state.ugc === 'oui'){
+    if(ugcAllChecked()){
+      status.className = 'ugc-status ok';
+      status.innerHTML = '<span>✅</span><span>Pass UGC activé — offert avec ton cursus.</span>';
+    } else {
+      status.className = 'ugc-status ko';
+      status.innerHTML = '<span>⏳</span><span>Coche toutes les conditions pour activer le Pass UGC.</span>';
+    }
+  }
+
+  // All Access alert: only show if oui + (non or null parcours)
+  const allAccessBlocked = state.allaccess === 'oui' && (state.parcours === 'non' || state.parcours === null);
+  document.getElementById('allaccess-alert').style.display = allAccessBlocked ? 'flex' : 'none';
+
+  // Summary
+  const items = lineItems();
+  const rowsEl = document.getElementById('summary-rows');
+  if(items.length === 0){
+    rowsEl.innerHTML = '<div class="summary-row empty">Commence à choisir tes options ↑</div>';
+  } else {
+    rowsEl.innerHTML = items.map(i=>{
+      const v = i.badge ? `<span style="color:var(--green);font-weight:700">${i.badge}</span>` : `${format(i.v)} €`;
+      return `<div class="summary-row"><span class="name">${i.k}</span><span class="val">${v}</span></div>`;
+    }).join('');
+  }
+
+  // Total
+  document.getElementById('sum-total').textContent = format(t);
+  document.getElementById('price-num').textContent = format(t);
+
+  // CTA disable on blocked state
+  const cta = document.getElementById('cta');
+  cta.disabled = allAccessBlocked;
+
+  // Bump animation
+  if(t !== lastTotal){
+    const pa = document.getElementById('price-amount');
+    pa.classList.remove('bump');
+    void pa.offsetWidth;
+    pa.classList.add('bump');
+    lastTotal = t;
+  }
+}
+
+// Wire up options
+document.querySelectorAll('.opts').forEach(grp=>{
+  const key = grp.dataset.group;
+  grp.querySelectorAll('.opt').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const v = btn.dataset.val;
+      const prev = state[key];
+      state[key] = (state[key] === v) ? null : v;
+
+      // Effet adaptatif : Pass All Access absorbe tournages + bande démo
+      const becameAA = key === 'allaccess' && state.allaccess === 'oui' && prev !== 'oui';
+      const leftAA   = key === 'allaccess' && state.allaccess !== 'oui' && prev === 'oui';
+
+      // Si parcours retiré alors qu'on a All Access -> ça désactive AA implicitement (la logique allAccessActive)
+      // mais il faut aussi restaurer les choix tournages/bande si on quitte AA actif
+      const wasAAActive = (prev === 'oui' && key === 'allaccess')
+        || (key === 'parcours' && state.allaccess === 'oui' && (prev === 'oui' || prev === 'accelere'));
+      const isAAActiveNow = (state.allaccess === 'oui') && (state.parcours === 'oui' || state.parcours === 'accelere');
+
+      if(!wasAAActive && isAAActiveNow){
+        // On entre dans l'état AA actif -> on stash et on reset
+        stash.tournages = state.tournages;
+        stash.bande = state.bande;
+        state.tournages = 0;
+        state.bande = null;
+      } else if(wasAAActive && !isAAActiveNow){
+        // On quitte l'état AA actif -> on restaure si l'utilisateur n'a rien remis depuis
+        if(stash.tournages !== null) state.tournages = stash.tournages;
+        if(stash.bande !== null)     state.bande     = stash.bande;
+        stash.tournages = null;
+        stash.bande = null;
+      }
+
+      render();
+    });
+  });
+});
+
+// Cases UGC
+document.querySelectorAll('#ugc-conditions .checkbox').forEach(cb=>{
+  cb.addEventListener('click',()=>{
+    const k = cb.dataset.cond;
+    state.ugcConditions[k] = !state.ugcConditions[k];
+    render();
+  });
+});
+
+// Tournages stepper
+document.getElementById('t-plus').addEventListener('click',()=>{
+  if(state.tournages < 99){ state.tournages++; render(); }
+});
+document.getElementById('t-minus').addEventListener('click',()=>{
+  if(state.tournages > 0){ state.tournages--; render(); }
+});
+
+function goCandidature(){
+  window.location.href = 'https://candidature.anyone.fr/';
+}
+
+render();
+</script>
+</body>
+</html>
